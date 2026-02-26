@@ -1,73 +1,56 @@
-# Run in spot: npx @redocly/spot run ./apis/arazzo.yaml --input token=abc
+# Run locally: npx @redocly/spot run ./apis/arazzo.yaml --input token=abc123
 arazzo: 1.0.0
 info:
-  title: Warp API
-  version: 1.0.0
+  title: Finzly Connect Sample Workflow
+  version: 0.1.0
 sourceDescriptions:
   - name: api-reference
     type: openapi
     url: index.yaml
-    x-serverUrl: "http://localhost:4000/_mock/apis/"
+    x-serverUrl: "https://sandbox.api.finzly.io"
 workflows:
-  - workflowId: missionLostInvention
-    summary: Lost invention
-    description: |-
-      Travel back to the year 1889 and retrieve the blueprint for Nikola Tesla’s lost invention before it’s destroyed in a mysterious fire.
+  - workflowId: onboardingAndFirstPayment
+    summary: Create customer and submit first payment
+    description: |
+      Demonstrates a basic sandbox flow for onboarding a customer and submitting a payment.
     inputs:
       type: object
       properties:
         token:
           type: string
-          description: JWT Bearer token
+          description: JWT bearer token for sandbox access.
     parameters:
       - name: Authorization
         in: header
         value: "Bearer {$inputs.token}"
     steps:
-      - stepId: setAnchorToCurrentTime
-        operationId: api-reference.setAnchor
-        description: Set an anchor to the current time.
+      - stepId: createSampleCustomer
+        operationId: api-reference.createCustomer
+        description: Create a sample customer record.
+        requestBody:
+          payload:
+            type: BUSINESS
+            legalName: Acme Manufacturing LLC
+            email: treasury@acme.example
+            country: US
         outputs:
-          anchor_id: $response.body#/id
-      - stepId: createTimelineTo1889
-        operationId: api-reference.createTimeline
-        description: Create a timeline to 1889.
+          customerId: $response.body#/id
+      - stepId: createFirstPayment
+        operationId: api-reference.createPayment
+        description: Submit a sample payment for the customer.
+        requestBody:
+          payload:
+            amount: 1250.75
+            currency: USD
+            rail: ACH
+            beneficiaryId: ben_001
+            remittanceInformation: Invoice 2026-0021
         outputs:
-          timeline_id: $response.body#/id
-      - stepId: travelTo1889
-        operationId: api-reference.timeTravel
-        description: Travel to 1889.
-        requestBody:
-          payload:
-            destination: $steps.createTimelineTo1889.outputs.timeline_id
-      - stepId: findAndRegisterBlueprint
-        operationId: api-reference.registerItem
-        description: Find the blueprints. Then, register them using the `registerItem` API call.
-        requestBody:
-          payload:
-            description: Tesla's blueprint
-        outputs:
-          item_id: $response.body#/id
-      - stepId: avoidParadox
-        operationId: api-reference.checkParadox
-        description: Check for paradoxes.
-        requestBody:
-          payload:
-            timeline_id: $steps.createTimelineTo1889.outputs.timeline_id
-            proposed_changes:
-              - event: Sneak in to retrieve Tesla's blueprint
-                time: "1889-03-10T23:50:00Z"
-              - item_id: $steps.findAndRegisterBlueprint.outputs.item_id
-        successCriteria: 
-          - condition: $statusCode == 200
-          - condition: $.is_stable == true
-            context: $response.body
-            type: jsonpath
-      - stepId: returnToPresent
-        operationId: api-reference.timeTravel
-        description: Return to the present.
-        requestBody:
-          payload:
-            destination: $steps.setAnchorToCurrentTime.outputs.anchor_id
-            items:
-              - $steps.findAndRegisterBlueprint.outputs.item_id
+          paymentId: $response.body#/id
+      - stepId: checkPaymentStatus
+        operationId: api-reference.getPayment
+        description: Retrieve payment status.
+        parameters:
+          - name: paymentId
+            in: path
+            value: $steps.createFirstPayment.outputs.paymentId

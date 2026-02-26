@@ -1,0 +1,34 @@
+nav[data-component-name='Navbar/Navbar'],
+nav[data-component-name='Navbar/Navbar'] > div {
+  background: var(--finzly-navbar-bg) !important;
+  border-bottom: 1px solid #1a2f55 !important;
+  backdrop-filter: blur(10px);
+}
+
+nav[data-component-name='Navbar/Navbar'] a,
+nav[data-component-name='Navbar/Navbar'] button {
+  color: #f2f7ff !important;
+  font-weight: 600;
+}
+
+nav[data-component-name='Navbar/Navbar'] a span,
+nav[data-component-name='Navbar/Navbar'] button span {
+  color: inherit !important;
+}
+
+nav[data-component-name='Navbar/Navbar'] a:hover,
+nav[data-component-name='Navbar/Navbar'] button:hover {
+  color: #f2f7ff !important;
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  border-radius: 8px;
+}
+
+nav[data-component-name='Navbar/Navbar'] a:hover span,
+nav[data-component-name='Navbar/Navbar'] button:hover span {
+  color: #f2f7ff !important;
+}
+
+nav[data-component-name='Navbar/Navbar'] img {
+  max-height: 30px;
+  width: auto;
+}

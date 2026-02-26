@@ -43,18 +43,32 @@ const Wrapper = styled.div`
   margin-top: 82px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background-color: var(--layer-color-ontonal);
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
+  border: 1px solid #d8e3f5;
+  border-radius: 14px;
+  overflow: hidden;
   width: 100%;
   max-width: 896px;
   margin-bottom: 55px;
   position: relative;
   z-index: 10;
+  box-shadow: 0 12px 30px rgba(16, 38, 77, 0.08);
+
+  .dark & {
+    background: linear-gradient(180deg, #0f213f 0%, #0b1b3a 100%);
+    border-color: #1f3d70;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Column = styled.div<{ isLeftColumn?: boolean }>`
-  border-right: ${({ isLeftColumn }) => isLeftColumn && '1px solid var(--border-color-secondary)'};
+  border-right: ${({ isLeftColumn }) => (isLeftColumn ? '1px solid #d8e3f5' : 'none')};
   h4 {
-    color: var(--color-magenta-7);
+    color: #10264d;
     font-size: 20px;
     font-weight: 600;
     line-height: 28px;
@@ -62,7 +76,7 @@ const Column = styled.div<{ isLeftColumn?: boolean }>`
   }
 
   p {
-    color: var(--color-persian-green-8);
+    color: #38507a;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -91,6 +105,16 @@ const Column = styled.div<{ isLeftColumn?: boolean }>`
     border-right: none;
     border-bottom: none;
     border-left: none;
-    background-color: var(--layer-color-ontonal);
+    background-color: transparent;
+  }
+
+  .dark & {
+    border-right-color: #1f3d70;
+    h4 {
+      color: #ffffff;
+    }
+    p {
+      color: #b8cbec;
+    }
   }
 `;

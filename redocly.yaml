@@ -4,37 +4,36 @@
 extends:
   - minimal
 links:
-  - href: https://fonts.googleapis.com/css2?family=VT323&display=swap
-  - href: https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap
+  - href: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap
 seo:
-  title: Warp API
-  description: Warp is the groundbreaking API that allows you to navigate, manipulate, and control time.
+  title: Finzly API Developer Portal
+  description: Developer resources for Finzly Connect APIs including getting started guides, API documentation, changelog, and support.
 navbar:
   items:
-    - page: tutorials/index.md
-      label: Missions
-    - page: guides/index.md
-      label: Guides
+    - page: getting-started.md
+      label: Getting Started
     - page: apis/index.yaml
-      label: API Reference
-    - page: tools/index.md
-      label: Tools
+      label: API Docs
     - page: changelog.md
       label: Changelog
-    - page: about.md
-      label: About this template
+    - page: support.md
+      label: Support
+    - href: https://finzly.com/
+      label: Finzly.com
 markdown:
   toc:
     depth: 2
 logo:
-  image: images/logo.svg
+  image: images/Finzly-logo.png
   link: /
 footer:
-  copyrightText: Copyleft © Redocly Inc. No rights reserved.
+  copyrightText: Copyright © Finzly. All rights reserved.
   items:
     - page: legal/terms.md
-      label: Terms
-    - page: legal/responsible-use.md
-      label: Responsible Use
-    - href: /
-      label: Cookies
+      label: Terms of Use
+    - page: legal/privacy-notice.md
+      label: Privacy Notice
+    - page: legal/security.md
+      label: Security
+    - page: support.md
+      label: Contact us

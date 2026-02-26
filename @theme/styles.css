@@ -1,10 +1,51 @@
+@import './navbar.css';
+
 /* Learn more about Realm styles: https://redocly.com/docs/realm/style/concepts/styling */
+:root {
+  --finzly-navy: #0b1b3a;
+  --finzly-navy-2: #10264d;
+  --finzly-navbar-bg: #5200ff;
+  --finzly-blue: #008cff;
+  --finzly-blue-2: #28a5ff;
+  --finzly-border: #d8e3f5;
+  --navbar-bg-color: #5200ff;
+  --navbar-text-color: #f2f7ff;
+  --navbar-item-text-color-hover: #8ecbff;
+}
+
+html,
+body {
+  font-family: Inter, Arial, sans-serif;
+}
+
+.footer {
+  border-top: 1px solid #1f3d70;
+  background: #0b1b3a;
+}
+
+.footer a,
+.footer p,
+.footer span {
+  color: #c8daf5;
+}
+
 :root .button-tone-brand {
-  background-color: var(--color-persian-green-6);
-  color: var(--text-color-on-color);
+  background: linear-gradient(90deg, var(--finzly-blue), var(--finzly-blue-2));
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 24px rgba(0, 140, 255, 0.25);
+}
+
+:root .button-tone-brand:hover {
+  filter: brightness(1.05);
 }
 
 :root.dark .button-tone-brand {
-  background-color: var(--color-persian-green-6);
-  color: #fff;
+  background: linear-gradient(90deg, #3ea8ff, #66bcff);
+  color: #06122a;
+}
+
+.menu-content a[aria-current='page'] {
+  color: #8ecbff;
+  font-weight: 600;
 }
