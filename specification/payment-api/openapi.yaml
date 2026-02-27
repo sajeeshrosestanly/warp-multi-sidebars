@@ -1,9 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Finzly Connect API (Sample)
-  description: |
-    Temporary sample API specification for the Finzly API Developer Portal.
-    Replace these placeholder endpoints with production Finzly API contracts.
+  title: Finzly Connect Payment API (Sample)
+  description: Payment API subset extracted from the combined specification.
   version: 0.1.0
   contact:
     name: Finzly Developer Support
@@ -18,8 +16,6 @@ security:
 tags:
   - name: Payment APIs
     description: Sample endpoints for initiating and tracking payment requests.
-  - name: Customer APIs
-    description: Sample endpoints for onboarding and retrieving customer profiles.
 paths:
   /payments:
     post:
@@ -80,59 +76,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /customers:
-    post:
-      summary: Create customer
-      operationId: createCustomer
-      tags:
-        - Customer APIs
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerRequest'
-      responses:
-        '201':
-          description: Customer created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customer'
-        '400':
-          description: Validation error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-
-  /customers/{customerId}:
-    get:
-      summary: Get customer by ID
-      operationId: getCustomer
-      tags:
-        - Customer APIs
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          description: Unique customer identifier.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Customer details returned.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customer'
-        '404':
-          description: Customer not found.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-
 components:
   schemas:
     CreatePaymentRequest:
@@ -185,48 +128,6 @@ components:
           type: string
           format: date-time
           example: '2026-02-26T13:25:10Z'
-
-    CreateCustomerRequest:
-      type: object
-      required:
-        - type
-        - legalName
-      properties:
-        type:
-          type: string
-          enum: [BUSINESS, INDIVIDUAL]
-          example: BUSINESS
-        legalName:
-          type: string
-          example: Acme Manufacturing LLC
-        email:
-          type: string
-          format: email
-          example: treasury@acme.example
-        country:
-          type: string
-          example: US
-
-    Customer:
-      type: object
-      properties:
-        id:
-          type: string
-          example: cus_49ca21
-        type:
-          type: string
-          example: BUSINESS
-        legalName:
-          type: string
-          example: Acme Manufacturing LLC
-        status:
-          type: string
-          enum: [PENDING_REVIEW, ACTIVE, SUSPENDED]
-          example: ACTIVE
-        createdAt:
-          type: string
-          format: date-time
-          example: '2026-02-26T13:29:11Z'
 
     Problem:
       type: object
