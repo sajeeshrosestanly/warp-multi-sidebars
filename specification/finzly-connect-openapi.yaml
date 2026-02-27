@@ -63,7 +63,7 @@ paths:
   /v3/payments/debitrequest:
     $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1debitrequest
   /v3/payments/booktransfer:
-    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1booktransfer
+    $ref: ./payment-api/transfer-openapi.yaml#/paths/~1v3~1payments~1booktransfer
   /v3/payments/{paymentUID}:
     $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}
   /v3/payments/{paymentUID}/cancel:
@@ -73,7 +73,7 @@ paths:
   /v3/payments/{paymentUID}/reverse:
     $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}~1reverse
   /api/gateway/v1/payments/waterfall:
-    $ref: ./payment-api/payments-openapi.yaml#/paths/~1api~1gateway~1v1~1payments~1waterfall
+    $ref: ./payment-api/transfer-openapi.yaml#/paths/~1api~1gateway~1v1~1payments~1waterfall
   /customers:
     $ref: ./customer-api/openapi.yaml#/paths/~1customers
   /customers/{customerId}:
