@@ -11,6 +11,10 @@
   --navbar-bg-color: #5200ff;
   --navbar-text-color: #f2f7ff;
   --navbar-item-text-color-hover: #8ecbff;
+  --navbar-item-bg-color-hover: rgba(255, 255, 255, 0.14);
+  --navbar-item-bg-color-active: rgba(41, 12, 110, 0.9);
+  --navbar-item-text-color-active: #f3e9ff;
+  --navbar-item-border-color-active: rgba(183, 147, 255, 0.45);
 }
 
 html,
@@ -18,15 +22,39 @@ body {
   font-family: Inter, Arial, sans-serif;
 }
 
+div[data-component-name='Layout/PageLayout'] {
+  min-height: auto !important;
+}
+
 .footer {
   border-top: 1px solid #1f3d70;
   background: #0b1b3a;
+  padding: 0 !important;
+  min-height: auto !important;
 }
 
 .footer a,
 .footer p,
 .footer span {
   color: #c8daf5;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0;
+}
+
+.footer > div,
+.footer [data-component-name*='Footer/FooterWrapper'],
+.footer [data-component-name*='Footer/FooterCopyright'] {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 0 !important;
+}
+
+.footer nav,
+.footer ul,
+.footer [data-component-name*='Footer/FooterItems'] {
+  display: none !important;
 }
 
 :root .button-tone-brand {

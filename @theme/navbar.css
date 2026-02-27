@@ -9,6 +9,8 @@ nav[data-component-name='Navbar/Navbar'] a,
 nav[data-component-name='Navbar/Navbar'] button {
   color: #f2f7ff !important;
   font-weight: 600;
+  background-color: transparent;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
 nav[data-component-name='Navbar/Navbar'] a span,
@@ -28,7 +30,118 @@ nav[data-component-name='Navbar/Navbar'] button:hover span {
   color: #f2f7ff !important;
 }
 
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page'],
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page']:hover,
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page']:focus,
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page']:active,
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page']:visited,
+nav[data-component-name='Navbar/Navbar'] a.active,
+nav[data-component-name='Navbar/Navbar'] a.active:hover,
+nav[data-component-name='Navbar/Navbar'] a.active:focus,
+nav[data-component-name='Navbar/Navbar'] a.active:active,
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page'],
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page']:hover,
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page']:focus,
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page']:active {
+  color: #f3e9ff !important;
+  background: linear-gradient(90deg, rgba(41, 12, 110, 0.9), rgba(64, 16, 158, 0.88)) !important;
+  border: 1px solid rgba(183, 147, 255, 0.45) !important;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(10, 0, 35, 0.42);
+}
+
+/* Redocly runtime class for currently selected navbar item */
+nav[data-component-name='Navbar/Navbar'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP,
+nav[data-component-name='Navbar/Navbar'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP:hover,
+nav[data-component-name='Navbar/Navbar'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP:focus,
+nav[data-component-name='Navbar/Navbar'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP:active,
+nav[data-component-name='Navbar/Navbar'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP:visited {
+  color: #f3e9ff !important;
+  background: linear-gradient(90deg, rgba(41, 12, 110, 0.9), rgba(64, 16, 158, 0.88)) !important;
+  border: 1px solid rgba(183, 147, 255, 0.45) !important;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(10, 0, 35, 0.42);
+}
+
+nav[data-component-name='Navbar/Navbar'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP span {
+  color: #f3e9ff !important;
+}
+
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page'] span,
+nav[data-component-name='Navbar/Navbar'] a.active span,
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page'] span {
+  color: #f3e9ff !important;
+}
+
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page']::before,
+nav[data-component-name='Navbar/Navbar'] a.active::before,
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page']::before,
+nav[data-component-name='Navbar/Navbar'] a[aria-current='page']::after,
+nav[data-component-name='Navbar/Navbar'] a.active::after,
+nav[data-component-name='Navbar/Navbar'] button[aria-current='page']::after {
+  background: transparent !important;
+}
+
 nav[data-component-name='Navbar/Navbar'] img {
   max-height: 30px;
   width: auto;
+}
+
+nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo'] a {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Mobile navbar dropdown/menu styling */
+@media screen and (max-width: 959px) {
+  nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarMenu'],
+  nav[data-component-name='Navbar/Navbar'] ul[class*='NavbarMenu__NavItemsContainer'] {
+    background: var(--finzly-navbar-bg) !important;
+    border: 1px solid rgba(183, 147, 255, 0.35) !important;
+    border-radius: 12px;
+    padding: 8px !important;
+    margin-top: 8px;
+  }
+
+  nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarMenu'] a,
+  nav[data-component-name='Navbar/Navbar'] ul[class*='NavbarMenu__NavItemsContainer'] a {
+    display: block;
+    color: #f2f7ff !important;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 8px 10px !important;
+  }
+
+  nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarMenu'] a:hover,
+  nav[data-component-name='Navbar/Navbar'] ul[class*='NavbarMenu__NavItemsContainer'] a:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #f2f7ff !important;
+  }
+
+  nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarMenu'] a[aria-current='page'],
+  nav[data-component-name='Navbar/Navbar'] ul[class*='NavbarMenu__NavItemsContainer'] a[aria-current='page'],
+  nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarMenu'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP,
+  nav[data-component-name='Navbar/Navbar'] ul[class*='NavbarMenu__NavItemsContainer'] a.NavbarItem__NavbarMenuItem-sc-16vobcz-1.fijZEP {
+    background: linear-gradient(90deg, rgba(41, 12, 110, 0.9), rgba(64, 16, 158, 0.88)) !important;
+    border-color: rgba(183, 147, 255, 0.45) !important;
+    color: #f3e9ff !important;
+  }
+
+  /* Dropdown-based mobile menus rendered by theme components */
+  [class*='DropdownMenu__DropdownMenuWrapper'],
+  [class*='Dropdown__ChildrenWrapper'] {
+    background: var(--finzly-navbar-bg) !important;
+    border: 1px solid rgba(183, 147, 255, 0.35) !important;
+    border-radius: 12px !important;
+  }
+
+  [class*='DropdownMenuItem__DropdownMenuItemWrapper'] {
+    color: #f2f7ff !important;
+    border-radius: 8px !important;
+  }
+
+  [class*='DropdownMenuItem__DropdownMenuItemWrapper']:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #f2f7ff !important;
+  }
 }

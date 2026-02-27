@@ -1,78 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ArrowRightIcon, Button } from '@redocly/theme';
-import { CardWithCode } from './@theme/components/CardWithCode/CardWithCode';
 
-const code = `curl -X POST \\
-  https://api.finzly.io/payments \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "amount": 1250.75,
-    "currency": "USD",
-    "rail": "ACH",
-    "beneficiaryId": "ben_001"
-  }'
-`;
+const finzlyBackground = String(require('./images/background.svg')).replace(/\\/g, '/');
 
 export default function HomePage() {
   return (
     <div>
-      <HeroContainer>
-        <HeroBg />
+      <FinzlyContainer>
+        <FinzlyBg />
         <h1>Finzly API Developer Portal</h1>
         <p>Build modern banking experiences with Finzly Connect APIs.</p>
-        <Button size="large" variant="primary" tone="brand" to="/getting-started">
-          Get started
-        </Button>
-        <CardWithCode
-          title="Quickstart Example"
-          description="Submit a sample payment request to validate your setup in sandbox."
-          code={code}
-        />
-      </HeroContainer>
-
+      </FinzlyContainer>
       <Container>
-        <h3>What you can do here</h3>
-        <Feature>
-          <ArrowRightIcon />
-          <p>Read onboarding steps for sandbox access, authentication, and first API call.</p>
-        </Feature>
-        <Feature>
-          <ArrowRightIcon />
-          <p>Explore Finzly sample API docs for Payment and Customer APIs.</p>
-        </Feature>
-        <Feature>
-          <ArrowRightIcon />
-          <p>Track release notes and breaking changes in the changelog.</p>
-        </Feature>
-        <Feature>
-          <ArrowRightIcon />
-          <p>Contact support for integration and production onboarding questions.</p>
-        </Feature>
-      </Container>
-
-      <Container>
-        <ButtonContainer>
-          <Button size="large" to="/getting-started">
-            Getting Started
-          </Button>
-          <Button size="large" to="/apis/index.yaml">
-            API Docs
-          </Button>
-          <Button size="large" to="/changelog">
-            Changelog
-          </Button>
-          <Button size="large" to="/support">
-            Support
-          </Button>
-        </ButtonContainer>
+        <h3>Build with Finzly Connect</h3>
+        <p>
+          Access developer resources for payment initiation, customer onboarding, release updates, and integration
+          support. Start in sandbox and move to production with confidence.
+        </p>
+        <CardGrid>
+          <Card href="/getting-started">
+            <h4>Getting Started</h4>
+            <p>Set up credentials, authenticate, and make your first API call in minutes.</p>
+          </Card>
+          <Card href="/apis/index.yaml">
+            <h4>API Docs</h4>
+            <p>Explore Payment APIs and Customer APIs with schemas and example payloads.</p>
+          </Card>
+          <Card href="/changelog">
+            <h4>Changelog</h4>
+            <p>Track new features, behavior updates, and important release notes.</p>
+          </Card>
+          <Card href="/support">
+            <h4>Support</h4>
+            <p>Get help with integration questions, troubleshooting, and onboarding.</p>
+          </Card>
+        </CardGrid>
       </Container>
     </div>
   );
 }
 
-const HeroBg = styled.div`
+const FinzlyBg = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -87,26 +55,19 @@ const HeroBg = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(${require('./images/background.svg')});
-    background-size: cover;
-    filter: blur(36px);
-    opacity: 0.55;
+    background-image:
+      linear-gradient(180deg, rgba(82, 0, 255, 0.2) 0%, rgba(82, 0, 255, 0) 55%),
+      url('https://finzly.com/wp-content/uploads/2026/01/ef7fe3.webp'),
+      url('${finzlyBackground}');
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: center top, center 42%, center top;
+    background-size: cover, auto min(58vh, 560px), cover;
+    opacity: 0.72;
   }
 
-  &:after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-image: url(${require('./images/grid.svg')});
-    opacity: 0.26;
-    .dark & {
-      background-image: url(${require('./images/grid-dark.svg')});
-    }
-  }
 `;
 
-const HeroContainer = styled.div`
+const FinzlyContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -114,6 +75,7 @@ const HeroContainer = styled.div`
   justify-content: center;
   padding: 32px;
   position: relative;
+  min-height: 500px;
 
   h1 {
     color: #0b1b3a;
@@ -143,6 +105,7 @@ const HeroContainer = styled.div`
   }
 
   @media (max-width: 900px) {
+    min-height: 420px;
     h1 {
       font-size: 40px;
       line-height: 48px;
@@ -156,7 +119,7 @@ const HeroContainer = styled.div`
 `;
 
 const Container = styled.div`
-  margin-top: 64px;
+  margin: 64px auto 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -165,7 +128,6 @@ const Container = styled.div`
   font-weight: 400;
   line-height: 28px;
   width: min(90%, 886px);
-  margin: 64px auto 0;
 
   h3 {
     color: #0b1b3a;
@@ -175,35 +137,76 @@ const Container = styled.div`
     margin: 0 0 24px 0;
   }
 
+  > p {
+    margin: 0;
+    color: #38507a;
+  }
+
   .dark & {
     color: #c0d1ee;
     h3 {
       color: #f2f7ff;
     }
+    > p {
+      color: #b8cbec;
+    }
+  }
+
+  @media (max-width: 900px) {
+    margin: 48px auto 36px;
   }
 `;
 
-const Feature = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: var(--spacing-sm);
+const CardGrid = styled.div`
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 
-  svg {
-    height: 16px;
-    width: 16px;
-    margin-top: 6px;
-    flex-shrink: 0;
-    path {
-      fill: #008cff;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Card = styled.a`
+  text-decoration: none;
+  border-radius: 12px;
+  border: 1px solid #d8e3f5;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(16, 38, 77, 0.08);
+
+  h4 {
+    margin: 0 0 8px 0;
+    color: #10264d;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  p {
+    margin: 0;
+    color: #38507a;
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  &:hover {
+    border-color: #b793ff;
+    box-shadow: 0 10px 24px rgba(82, 0, 255, 0.18);
+    transform: translateY(-1px);
+  }
+
+  .dark & {
+    border-color: #1f3d70;
+    background: linear-gradient(180deg, #0f213f 0%, #0b1b3a 100%);
+
+    h4 {
+      color: #f2f7ff;
+    }
+
+    p {
+      color: #b8cbec;
     }
   }
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: var(--spacing-xs);
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: var(--spacing-lg);
-`;
