@@ -2,6 +2,8 @@
 slug: /support
 ---
 
+<div class="page-wide">
+
 # Support
 
 Need help with Finzly Connect integration?
@@ -26,3 +28,5 @@ To speed up support, share:
 ## Placeholder notice
 
 This page currently contains placeholder support guidance and should be replaced with Finzly's official support workflow, SLAs, and escalation channels.
+
+</div>

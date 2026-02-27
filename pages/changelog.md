@@ -2,6 +2,8 @@
 slug: /changelog
 ---
 
+<div class="page-wide">
+
 # Changelog
 
 All notable updates to the Finzly API Developer Portal are documented here.
@@ -22,3 +24,5 @@ All notable updates to the Finzly API Developer Portal are documented here.
 
 ### Added
 - Initial Finzly-branded developer portal placeholder release based on a Redocly sample project.
+
+</div>

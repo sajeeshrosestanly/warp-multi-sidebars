@@ -5,10 +5,6 @@ info:
 servers:
   - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
     description: Authentication
-    variables:
-      tenant:
-        description: Tenant
-        default: sandbox
 security:
   - oAuth2:
       - roles
@@ -379,9 +375,8 @@ components:
               description: Bank address1.
               example: PO BOX 1602
             streetAddress2:
-              type: string
+              type: [string, "null"]
               description: Bank address2.
-              nullable: true
               example: PO
             city:
               type: string
@@ -400,14 +395,12 @@ components:
               description: Bank country code.
               example: US
             bic:
-              type: string
+              type: [string, "null"]
               description: Bank bic.
-              nullable: true
               example: INGDDEFFXXX
             branchBic:
-              type: string
+              type: [string, "null"]
               description: Bank branch bic.
-              nullable: true
               example: XXX
             nationalIdType:
               type: string

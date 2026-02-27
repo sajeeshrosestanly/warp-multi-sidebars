@@ -2,6 +2,8 @@
 slug: /getting-started
 ---
 
+<div class="page-wide">
+
 # Getting Started
 
 Welcome to the **Finzly API Developer Portal**.
@@ -53,3 +55,5 @@ curl -X POST https://sandbox.api.finzly.io/payments \
 
 - Replace placeholder endpoints with production Finzly API contracts.
 - Add product-specific guides for payments, customers, and webhook events.
+
+</div>

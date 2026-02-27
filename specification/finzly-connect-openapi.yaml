@@ -17,10 +17,15 @@ security:
   - bearerAuth: []
 tags:
   - name: Payments
+    description: APIs for creating, managing, and tracking individual payments.
   - name: Bulk Payment
+    description: APIs for bulk payment file upload and related operations.
   - name: Positive Pay
+    description: APIs for positive pay exception review and decisioning.
   - name: Bank
+    description: APIs to retrieve and search bank information.
   - name: Customer APIs
+    description: APIs for customer creation and retrieval.
 x-tagGroups:
   - name: Payment APIs
     tags:

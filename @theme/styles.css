@@ -89,3 +89,22 @@ article > p:has(time),
 article > div:has(time) {
   display: none !important;
 }
+
+/* Expand pages marked with .page-wide to full content width */
+div[data-component-name='Layout/DocumentationLayout']:has(.page-wide) [class*='DocumentationLayout__ContentWrapper'] {
+  width: 100%;
+  max-width: none;
+  margin: 24px 0 52px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  overflow-x: clip;
+}
+
+div[data-component-name='Layout/DocumentationLayout']:has(.page-wide) article {
+  width: 100%;
+  max-width: none;
+  margin: 24px 0 52px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  overflow-x: clip;
+}

@@ -5,10 +5,6 @@ info:
 servers:
   - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
     description: Authentication
-    variables:
-      tenant:
-        description: Tenant
-        default: sandbox
 security:
   - oAuth2:
       - roles
@@ -2805,8 +2801,7 @@ components:
           type: string
           example: USD
         paymentNotes:
-          type: string
-          nullable: true
+          type: [string, "null"]
           example: Testing
         entryType:
           type: string
@@ -2824,8 +2819,7 @@ components:
           type: string
           example: 2815 Coliseum Centre Dr
         senderAddress2:
-          type: string
-          nullable: true
+          type: [string, "null"]
           example: Coliseum
         receiverName:
           type: string
@@ -2840,8 +2834,7 @@ components:
           type: string
           example: Kubisova 919-19
         receiverAddress2:
-          type: string
-          nullable: true
+          type: [string, "null"]
           example: Kubisova
         creationDateTime:
           type: string
