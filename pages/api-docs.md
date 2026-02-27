@@ -21,6 +21,23 @@ slug: /api-docs
         </a>
       </div>
     </div>
+    <div class="api-hero-illustration" aria-hidden="true">
+      <span class="hero-line line-a"></span>
+      <span class="hero-line line-b"></span>
+      <span class="hero-line line-c"></span>
+      <span class="hero-node node-a"></span>
+      <span class="hero-node node-b"></span>
+      <span class="hero-node node-c"></span>
+      <span class="hero-node node-d"></span>
+      <span class="hero-node node-e"></span>
+    </div>
+  </div>
+
+  <div class="api-filter-chips" role="navigation" aria-label="Jump to API domains">
+    <a class="api-filter-chip" href="#payment-api">Payments</a>
+    <a class="api-filter-chip" href="#foreign-exchange-api">FX</a>
+    <a class="api-filter-chip" href="#webhook-api">Webhook</a>
+    <a class="api-filter-chip" href="#finzlycore-api">Core</a>
   </div>
 
   <div class="api-quickstart">

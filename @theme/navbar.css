@@ -88,8 +88,15 @@ nav[data-component-name='Navbar/Navbar'] img {
 }
 
 nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo'] a {
-  pointer-events: none;
-  cursor: default;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo'] a:hover,
+nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo'] a:focus,
+nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo'] a:active {
+  background-color: transparent !important;
+  border-radius: 0 !important;
 }
 
 /* Mobile navbar dropdown/menu styling */

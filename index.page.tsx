@@ -10,7 +10,16 @@ export default function HomePage() {
         <FinzlyBg />
         <h1>Finzly API Developer Portal</h1>
         <p>Build modern banking experiences with Finzly Connect APIs.</p>
+        <HomeActions>
+          <a className="api-fullspec-link" href="/api-docs" aria-label="Explore API Docs">
+            <span className="api-fullspec-icon home-fullspec-icon" aria-hidden="true">API</span>
+            <span className="api-fullspec-label">Explore API Docs</span>            
+          </a>
+        </HomeActions>
       </FinzlyContainer>
+
+      
+
       <Container>
         <h3>Build with Finzly Connect</h3>
         <p>
@@ -115,6 +124,31 @@ const FinzlyContainer = styled.div`
       font-size: 18px;
       line-height: 26px;
     }
+  }
+`;
+
+const HomeActions = styled.div`  
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .api-fullspec-link {
+    margin-left: 0;
+  }
+
+  .home-fullspec-icon {
+    width: 26px;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 100%);
+    color: #ffffff;
+    font-size: 7px;
+    line-height: 26px;
+    letter-spacing: 0.08em;
+    box-shadow: 0 2px 10px rgba(18, 8, 61, 0.24);
   }
 `;
 
