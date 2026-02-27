@@ -1,0 +1,1551 @@
+openapi: 3.0.0
+info:
+  title: UserAdmin
+  description: |
+    Finzly provides a modular platform that enables businesses, developers and fintechs to consume our APIs directly, through banks or embed them into their products. 
+
+    Launching financial products and services is through a simple, single API integration into our FinzlyOS platform.
+
+    Our API consists of modern RESTful messages to connect and communicate with our FinzlyOS platform. For every message, the platform returns a REST response.
+  termsOfService: https://finzly.com/terms/
+  contact:
+    name: support@finzly.com
+    url: https://finzly.com
+    email: support@finzly.com
+  license:
+    name: Commercial Finzly License
+    url: https://finzly.com
+  version: 2.0.0
+servers:
+  - url: https://{tenant}-security-{environment}.{dns}/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: FinzlyOS Open Banking APIs
+    variables:
+      tenant:
+        description: Tenant Code
+        default: sandbox
+      environment:
+        description: Environment
+        default: uat
+      dns:
+        description: DNS
+        default: finzly.io
+tags:
+  - name: Applications
+    description: Application information
+  - name: Roles
+    description: Roles created by business customers to support their internal users
+  - name: Users
+    description: Bank Customer user administration
+paths:
+  /applications:
+    get:
+      tags:
+        - Applications
+      summary: Get the applications details
+      description: Get the applications details
+      operationId: getApplication
+      parameters:
+        - name: type
+          in: query
+          description: Application Type
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - BANK
+              - CUSTOMER
+          example: BANK or CUSTOMER
+        - name: status
+          in: query
+          description: Application status
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - INACTIVE
+          example: ACTIVE or INACTIVE
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApplicationsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApplicationsResponse'
+  /applications/appcode/{app-code}:
+    get:
+      tags:
+        - Applications
+      summary: Return application details by the application code
+      description: Return application details by the application code
+      operationId: getApplicationDetailsByAppCode
+      parameters:
+        - name: app-code
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: Application unique code.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApplicationByAppCodeResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApplicationByAppCodeResponse'
+  /v2/roles/search:
+    post:
+      tags:
+        - Roles
+      summary: Search Roles (v2)
+      description: Search roles
+      operationId: searchRoleV2
+      requestBody:
+        description: Search the roles using various parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2GetRoleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2GetRoleResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Role created with new roleId
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2GetRoleResponse'
+  /v2/roles:
+    post:
+      tags:
+        - Roles
+      summary: Add Role (v2)
+      description: Add a new role
+      operationId: addRoleV2
+      requestBody:
+        description: Role details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2CreateRoleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2CreateRoleResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Role created with new roleId
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2CreateRoleResponse'
+  /v2/roles/{roleUUID}:
+    get:
+      tags:
+        - Roles
+      summary: Get Role (v2)
+      description: Retrieve a role details by a role id
+      operationId: getRoleV2
+      parameters:
+        - name: roleUUID
+          in: path
+          description: A UUID (Universal Unique Identifier) associated with a role
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Type of the role
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - CUSTOMER
+              - BANK
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2GetRoleDetailsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Get role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2GetRoleDetailsResponse'
+    put:
+      tags:
+        - Roles
+      summary: Update Role (v2)
+      description: Update a role.
+      operationId: updateRoleV2
+      parameters:
+        - name: roleUUID
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: Role Id
+      requestBody:
+        description: Customer Role
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2CreateRoleRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2CreateRoleResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource you are trying to reach is not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Update role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2CreateRoleResponse'
+    delete:
+      tags:
+        - Roles
+      summary: Delete Role (v2)
+      description: Delete a role.
+      operationId: deleteRoleV2
+      parameters:
+        - name: roleUUID
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: A UUID associated with the role
+            example: 123e4567-e89b-12d3-a456-426614174000
+        - name: type
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            description: Type of role
+            example: BANK or CUSTOMER
+            enum:
+              - BANK
+              - CUSTOMER
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2DeleteRoleResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource you are trying to reach is not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Delete role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2DeleteRoleResponse'
+  /v2/users/search:
+    post:
+      tags:
+        - Users
+      summary: Search Users (v2)
+      description: Search users by the given request criteria. This API will return user profile data without role and userlimit details.
+      operationId: searchUserV2
+      requestBody:
+        description: Customer User
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2SearchUserRequest'
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2SearchUserResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: Search users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2SearchUserResponse'
+  /v2/users/{userUUID}:
+    get:
+      tags:
+        - Users
+      summary: Get User (v2)
+      description: Get the user by userUUID. This API will return user profile data along with role and userlimit details.
+      operationId: getUserV2
+      parameters:
+        - name: userUUID
+          in: path
+          description: A universally unique identifier (UUID) associated with the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Type of the user
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - CUSTOMER
+              - BANK
+            default: CUSTOMER
+          example: BANK or CUSTOMER
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2GetUserByUUID'
+        '400':
+          description: Bad request
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+  /v2/users:
+    put:
+      tags:
+        - Users
+      summary: Update User (v2)
+      description: Update an existing user
+      operationId: updateUserV2
+      requestBody:
+        description: Customer User
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2UpdateUserRequest'
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AddUserResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: New user is created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2AddUserResponse'
+    post:
+      tags:
+        - Users
+      summary: Add User (v2)
+      description: Add a new user to the system
+      operationId: addUserV2
+      requestBody:
+        description: Customer User
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2AddUserRequest'
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AddUserResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: New user is created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2AddUserResponse'
+  /v2/users/{userUUID}/activate:
+    put:
+      tags:
+        - Users
+      summary: Activate User (v2)
+      description: Activate a user
+      operationId: activateUserV2
+      parameters:
+        - name: userUUID
+          in: path
+          description: A universally unique identifier (UUID) assigned to the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: user type
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - BANK
+              - CUSTOMER
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ActivateSuspendResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: User activated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2ActivateSuspendResponse'
+  /v2/users/{userUUID}/suspend:
+    put:
+      tags:
+        - Users
+      summary: Suspend User (v2)
+      description: Suspend user
+      operationId: suspendUserV2
+      parameters:
+        - name: userUUID
+          in: path
+          description: A universally unique identifier (UUID) assigned to the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Type of the user
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - BANK
+              - CUSTOMER
+      responses:
+        '200':
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ActivateSuspendResponse'
+        '400':
+          description: bad input parameter environment
+        '401':
+          description: You are not authorized to access the resource
+        '403':
+          description: Accessing the resource you were trying to reach is forbidden
+        '404':
+          description: The resource you were trying to reach is not found
+        '405':
+          description: bad input parameter environment
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '503':
+          description: Service unavailable
+        default:
+          description: User suspended
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V2ActivateSuspendResponse'
+components:
+  schemas:
+    Error:
+      properties:
+        code:
+          type: string
+          description: Error code assigned by the system
+          example: invalidMethod
+        description:
+          type: string
+          description: Error description to provide addtional details about the error code
+          example: Invalid HTTP method used
+    GetApplicationsResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: APP001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to get an application: <Failure Reason>.'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchApplication'
+    SearchApplication:
+      properties:
+        appCode:
+          type: string
+          description: Code associated with the application
+          example: finzly.payment etc.
+        description:
+          type: string
+          description: Description of the application
+          example: Payment Hub etc.
+        status:
+          type: string
+          description: Status of the application
+          example: ACTIVE or INACTIVE
+        type:
+          type: string
+          description: Application type
+          example: BANK or CUSTOMER
+        entilements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationEntitlement'
+    GetApplicationByAppCodeResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: APP001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to get an application: <Failure Reason>.'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+    Application:
+      properties:
+        appCode:
+          type: string
+          description: Code associated with the application
+          example: finzly.payment etc.
+        description:
+          type: string
+          description: Description of the application
+          example: Payment Hub etc.
+        status:
+          type: string
+          description: Status of the application
+          example: ACTIVE or INACTIVE
+        type:
+          type: string
+          description: Application type
+          example: BANK or CUSTOMER
+        entilements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationEntitlement'
+        userLimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UserLimits'
+    ApplicationEntitlement:
+      properties:
+        UUID:
+          type: string
+          description: A UUID (Universal Unique Identifier) associated with the application entitlement.
+        entitlementCode:
+          type: string
+          description: A unique code assigned to the entitlement.
+          example: aBlkFil etc.
+        description:
+          type: string
+          description: Entitlement details
+    V2UpdateAddUserLimits:
+      properties:
+        limitCode:
+          type: string
+          description: A unique code assigned the limit.
+          example: ACH_USER_BULK_FILE_APPROVAL_LIMIT etc.
+        value:
+          type: string
+          description: A value assigned to the user limit.
+          example: 10000 etc.
+        appCode:
+          type: string
+          description: Application code to which the limit is associated with.
+          example: finzly.payments etc.
+        linkedEntitlementCode:
+          type: string
+          description: To which entitlement the user limit is associated with
+          example: aBlkFil etc.
+    V2UserLimits:
+      properties:
+        limitCode:
+          type: string
+          description: A unique code assigned the limit.
+          example: ACH_USER_BULK_FILE_APPROVAL_LIMIT etc.
+        value:
+          type: string
+          description: A value assigned to the user limit.
+          example: 10000 etc.
+        description:
+          type: string
+          description: User limit details.
+          example: ACH user bulk file approval limit etc.
+        appCode:
+          type: string
+          description: Application code to which the limit is associated with.
+          example: finzly.payments etc.
+        linkedEntitlementCode:
+          type: string
+          description: To which entitlement the user limit is associated with
+          example: aBlkFil etc.
+    V2GetRoleDetailsResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: ROLE001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to find a role: <Failure Reason>.'
+        data:
+          $ref: '#/components/schemas/V2Role'
+    V2Role:
+      properties:
+        roleUUID:
+          type: string
+          description: A UUID (Universal Unique Identifier) associated with the role
+          example: 123e4567-e89b-12d3-a456-426614174000 etc.
+        roleName:
+          type: string
+          description: Name of the role
+          example: User Admin etc.
+        description:
+          type: string
+          description: Role details
+          example: User Administrative role etc.
+        type:
+          type: string
+          description: Type of the Role
+          example: BANK or CUSTOMER
+          enum:
+            - CUSTOMER
+            - BANK
+        customerUID:
+          type: number
+          description: A unique id associated with the CRM entity
+        customerShortName:
+          type: string
+          description: Short name associated with the CRM entity
+          example: XYZCO etc.
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2App'
+    V2App:
+      properties:
+        appCode:
+          type: string
+          description: Applicaiton code
+          example: finzly.payment etc.
+        status:
+          type: string
+          description: Status of the application
+          example: ACTIVE or INACTIVE
+          enum:
+            - ACTIVE
+            - INACTIVE
+        entilements:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2RoleEntitlement'
+        userLimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UserLimits'
+    V2RoleEntitlement:
+      properties:
+        entitlementCode:
+          type: string
+          description: Entitlement description
+    V2CreateRoleResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: ROLE001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to add a role: <Failure Reason>.'
+        data:
+          $ref: '#/components/schemas/V2CreateRoleResponse_data'
+    V2CreateRoleRequest:
+      required:
+        - customerUID
+        - externalReferenceId
+        - type
+      properties:
+        externalReferenceId:
+          type: string
+        customerUID:
+          type: integer
+        roleName:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2App'
+    V2DeleteRoleResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: ROLE001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to delete a role: <Failure Reason>.'
+        data:
+          $ref: '#/components/schemas/V2DeleteRoleResponse_data'
+    V2GetRoleRequest:
+      required:
+        - customerUID
+        - limit
+        - page
+        - type
+      properties:
+        roleName:
+          type: string
+          description: Role Name
+          example: ApprovePayment etc.
+        type:
+          type: string
+          description: Type associated with the role
+          example: BANK or CUSTOMER
+        customerUID:
+          type: string
+          description: An unique id associated with the CRM entity
+          example: 1238 etc.
+        page:
+          type: integer
+          description: What page number to be returned
+          example: 1
+        limit:
+          type: integer
+          description: How many records to be returned for a given page
+          example: 50
+    V2GetRoleResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: ROLE001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to get roles: <Failure Reason>.'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2Role'
+        pagination:
+          $ref: '#/components/schemas/V2Pagination'
+    V2Pagination:
+      properties:
+        totalRecords:
+          type: number
+          description: Total number of records exist in the system for a given filter
+          format: integer
+          example: 100
+        returnedRecords:
+          type: number
+          description: Total number of records returned
+          format: integer
+          example: 10
+        pageReturned:
+          type: number
+          description: Current number of page returned
+          format: integer
+          example: 2
+        pageSize:
+          type: number
+          description: Total number of records in a given pages
+          format: integer
+          example: 10
+    V2SearchUserResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: USER001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to get the users: <Failure Reason>.'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2SearchUser'
+        pagination:
+          $ref: '#/components/schemas/V2Pagination'
+    V2SearchUser:
+      properties:
+        userUUID:
+          type: string
+          description: A universally unique identifier (UUID) assigned by the system
+          example: for e.g. 123e4567-e89b-12d3-a456-426614174000
+        userName:
+          type: string
+          description: Unique username assigned to the user
+          example: for e.g. user001
+        firstName:
+          type: string
+          description: User First Name
+          example: for e.g. John
+        lastName:
+          type: string
+          description: User Last Name
+          example: for e.g. Doe
+        department:
+          type: string
+          description: Primary bank department user is associated with
+          example: for e.g. payments
+        otherDepartments:
+          type: array
+          items:
+            type: string
+            description: Other bank departments user is associated with
+            example: for e.g. [admin,BSA]
+        customerUID:
+          type: string
+          description: Unique id associated with the CRM entity
+          example: '1223'
+        emulationUser:
+          type: string
+          description: Is the user has a emulation capability. This is applicable for CUSTOMER user type.
+          example: YES or NO
+        customerShortName:
+          type: string
+          description: Customer short name
+          example: DEMOBANK
+        status:
+          type: string
+          description: User status
+          example: Active or Suspended etc.
+        email:
+          type: string
+          description: Customer email address
+          example: test@bank.com
+        mobile:
+          type: string
+          description: Customer mobile contact number
+          example: '12345678'
+        type:
+          type: string
+          description: Type of the user
+          example: BANK or CUSTOMER
+          enum:
+            - BANK
+            - CUSTOMER
+        createdBy:
+          type: string
+          description: User Id who created the user in the system
+          example: ABC001
+        lastUpdatedBy:
+          type: string
+          description: User who last updated the user in the system
+          example: XYZ001
+    V2GetUserByUUID:
+      properties:
+        userUUID:
+          type: string
+          description: A universally unique identifier (UUID) assigned by the system
+          example: for e.g. 123e4567-e89b-12d3-a456-426614174000
+        userName:
+          type: string
+          description: Unique username assigned to the user
+          example: for e.g. user001
+        firstName:
+          type: string
+          description: User First Name
+          example: for e.g. John
+        lastName:
+          type: string
+          description: User Last Name
+          example: for e.g. Doe
+        department:
+          type: string
+          description: Primary bank department user is associated with
+          example: for e.g. payments
+        otherDepartments:
+          type: array
+          items:
+            type: string
+            description: Other bank departments user is associated with
+            example: for e.g. [admin,BSA]
+        customerUID:
+          type: string
+          description: Unique id associated with the CRM entity
+          example: '1223'
+        emulationUser:
+          type: string
+          description: Is the user has a emulation capability. This is applicable for CUSTOMER user type.
+          example: YES or NO
+        customerShortName:
+          type: string
+          description: Customer short name
+          example: DEMOBANK
+        status:
+          type: string
+          description: User status
+          example: Active or Suspended etc.
+        email:
+          type: string
+          description: Customer email address
+          example: test@bank.com
+        mobile:
+          type: string
+          description: Customer mobile contact number
+          example: '12345678'
+        type:
+          type: string
+          description: Type of the user
+          example: BANK or CUSTOMER
+          enum:
+            - BANK
+            - CUSTOMER
+        createdBy:
+          type: string
+          description: User Id who created the user in the system
+          example: ABC001
+        lastUpdatedBy:
+          type: string
+          description: User who last updated the user in the system
+          example: XYZ001
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UserRole'
+        userlimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UserLimits'
+    V2UserRole:
+      properties:
+        roleUUID:
+          type: string
+          description: A universally unique identifier (UUID) associated with the role
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Role name
+          example: AdminRole
+        description:
+          type: string
+          description: Role description
+          example: Bank admin permission
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UserApplications'
+    V2UserApplications:
+      properties:
+        appCode:
+          type: string
+          description: Application code
+          example: for e.g. finzly.payment
+        description:
+          type: string
+          description: Detail about the application
+          example: for e.g. Payment Hub application to process multiple payment rails
+        entitlements:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UserEntitlements'
+    V2UserEntitlements:
+      properties:
+        entitlement:
+          type: string
+          description: User entitlement code
+          example: for e.g. ApprovePayment
+        description:
+          type: string
+          description: Detail about the user entitlement
+          example: Allow user to approve the payment
+    V2AddUserRequest:
+      required:
+        - department
+        - email
+        - externalReferenceId
+        - firstName
+        - lastName
+        - mobile
+        - roles
+        - type
+        - userName
+      properties:
+        externalReferenceId:
+          type: string
+          description: A unique identifier (UUID) provided by the external system
+          example: for e.g. 123e4567-e89b-12d3-a456-426614174000 or 11223344
+        userName:
+          type: string
+          description: Unique username assigned to the user
+          example: for e.g. user001
+        type:
+          type: string
+          description: Type of the user
+          example: BANK or CUSTOMER
+          enum:
+            - BANK
+            - CUSTOMER
+        firstName:
+          type: string
+          description: User First Name
+          example: for e.g. John
+        lastName:
+          type: string
+          description: User Last Name
+          example: for e.g. Doe
+        department:
+          type: string
+          description: Primary bank department user is associated with
+          example: for e.g. payments
+        otherDepartments:
+          type: array
+          items:
+            type: string
+            description: Other bank departments user is associated with
+            example: for e.g. [admin,BSA]
+        customerUID:
+          type: string
+          description: Unique id associated with the CRM entity
+          example: '1223'
+        emulationUser:
+          type: string
+          description: Is the user has a emulation capability. This is applicable for CUSTOMER user type.
+          example: YES or NO
+        email:
+          type: string
+          description: Customer email address
+          example: test@bank.com
+        mobile:
+          type: string
+          description: Customer mobile contact number
+          example: '12345678'
+        ssoEnabled:
+          type: string
+          description: Is user has an emmulation capability
+          example: YES or NO
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2AddUserRequest_roles'
+        userLimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UpdateAddUserLimits'
+    V2UpdateUserRequest:
+      required:
+        - externalReferenceId
+        - userUUID
+      properties:
+        externalReferenceId:
+          type: string
+          description: Unique reference id provided by the external system.
+          example: '1122334'
+        userUUID:
+          type: string
+          description: A universally unique identifier (UUID) associated with the user
+          example: for e.g. 123e4567-e89b-12d3-a456-426614174000
+        firstName:
+          type: string
+          description: User First Name
+          example: for e.g. John
+        lastName:
+          type: string
+          description: User Last Name
+          example: for e.g. Doe
+        department:
+          type: string
+          description: Primary bank department user is associated with
+          example: for e.g. payments
+        otherDepartments:
+          type: array
+          items:
+            type: string
+            description: Other bank departments user is associated with
+            example: for e.g. [admin,BSA]
+        customerUID:
+          type: string
+          description: Unique id associated with the CRM entity
+          example: '1223'
+        email:
+          type: string
+          description: Customer email address
+          example: test@bank.com
+        mobile:
+          type: string
+          description: Customer mobile contact number
+          example: '12345678'
+        ssoEnabled:
+          type: string
+          description: Whether a user is a SSO user
+        roles:
+          $ref: '#/components/schemas/V2RoleListUserUpdateRequest'
+        userLimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2UpdateAddUserLimits'
+    V2RoleListUserUpdateRequest:
+      properties:
+        roleUUID:
+          type: string
+          description: A unique id associated with the role
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2AddUserRequest_applications'
+    V2AddUserResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: USER001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to add an user: <Failure Reason>.'
+        data:
+          $ref: '#/components/schemas/V2AddUserResponseData'
+    V2AddUserResponseData:
+      properties:
+        externalReferenceId:
+          type: string
+          description: Unique reference id from a system outside of finzly system.
+        userUUID:
+          type: string
+          description: A universally unique identifier (UUID) assigned to the user by the system
+          example: 123e4567-e89b-12d3-a456-426614174000
+    V2SearchUserRequest:
+      required:
+        - limit
+        - page
+      properties:
+        userName:
+          type: string
+          description: User name assigned to the User
+          example: user001
+        firstName:
+          type: string
+          description: User first name
+          example: John
+        lastName:
+          type: string
+          description: User last name
+          example: Doe
+        customerUID:
+          type: string
+          description: A unique identifier assigned to the CRM entity
+          example: '112233'
+        customerShortName:
+          type: string
+          description: Short name assigned to the CRM entity
+          example: DEMOBANK
+        departmentCode:
+          type: string
+          description: Department code
+          example: Payment
+        status:
+          type: string
+          description: User status
+          example: Active or Suspended etc.
+        type:
+          type: string
+          description: Type of the user
+          example: BANK or CUSTOMER
+        page:
+          type: integer
+          description: Which number of page of results to be returned
+          example: 1
+        limit:
+          maximum: 1000
+          type: integer
+          description: Total number of records to be returned for a given page
+          example: 100
+    V2ActivateSuspendResponse:
+      properties:
+        status:
+          type: string
+          description: This will return Success/Failed
+          example: Success or Failure
+        code:
+          type: string
+          description: This will indicate the error code in case of API error
+          example: USER001 etc.
+        message:
+          type: string
+          description: This will be the detailed error message indicating what failed and how to fix the issue
+          example: 'Failed to activate or suspend the user: <Failure Reason>.'
+    V2CreateRoleResponse_data:
+      type: object
+      properties:
+        externalReferenceId:
+          type: string
+          description: An external reference id
+          example: for e.g. 126879
+        roleUUID:
+          type: string
+          description: A UUID associated with the role
+          example: for e.g. 123e4567-e89b-12d3-a456-426614174000
+    V2DeleteRoleResponse_data:
+      type: object
+      properties:
+        roleUUID:
+          type: string
+          description: A UUID associated with the role
+          example: for e.g. 123e4567-e89b-12d3-a456-426614174000
+    V2AddUserRequest_entitlements:
+      type: object
+      properties:
+        entitlement:
+          type: string
+          description: User entitlement code
+          example: for e.g. Approve Payment
+    V2AddUserRequest_applications:
+      type: object
+      properties:
+        appCode:
+          type: string
+          description: Application code
+          example: for e.g. finzly.payment
+        entitlements:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2AddUserRequest_entitlements'
+    V2AddUserRequest_roles:
+      type: object
+      properties:
+        roleUUID:
+          type: string
+          description: A universally unique identifier (UUID) associated with the role
+          example: 123e4567-e89b-12d3-a456-426614174000
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2AddUserRequest_applications'

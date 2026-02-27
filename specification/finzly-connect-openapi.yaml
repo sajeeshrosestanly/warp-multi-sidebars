@@ -1,0 +1,87 @@
+openapi: 3.1.0
+info:
+  title: Finzly Connect API
+  description: Aggregated entrypoint that references payment and customer API specs.
+  version: 6.2.2.0
+  contact:
+    name: Finzly Developer Support
+    url: https://api.finzly.io/
+servers:
+  - url: https://api.finzly.io
+    description: Finzly production (placeholder)
+  - url: https://sandbox.api.finzly.io
+    description: Finzly sandbox (placeholder)
+security:
+  - oAuth2:
+      - roles
+  - bearerAuth: []
+tags:
+  - name: Payments
+  - name: Bulk Payment
+  - name: Positive Pay
+  - name: Bank
+  - name: Customer APIs
+x-tagGroups:
+  - name: Payment APIs
+    tags:
+      - Payments
+      - Bulk Payment
+      - Positive Pay
+      - Bank
+  - name: Customer APIs
+    tags:
+      - Customer APIs
+
+paths:
+  /v1/payments/customers/{customerUID}/files/{fileType}:
+    $ref: ./payment-api/bulk-payments-openapi.yaml#/paths/~1v1~1payments~1customers~1{customerUID}~1files~1{fileType}
+  /v1/files/{fileNumber}/payments:
+    $ref: ./payment-api/bulk-payments-openapi.yaml#/paths/~1v1~1files~1{fileNumber}~1payments
+  /v1/banks/{routingNumber}:
+    $ref: ./payment-api/bank-openapi.yaml#/paths/~1v1~1banks~1{routingNumber}
+  /v1/banks/search/{routingNumber}:
+    $ref: ./payment-api/bank-openapi.yaml#/paths/~1v1~1banks~1search~1{routingNumber}
+  /v1/banks:
+    $ref: ./payment-api/bank-openapi.yaml#/paths/~1v1~1banks
+  /v1/positivepay/payments/{paymentId}/decisions/{decisionType}:
+    $ref: ./payment-api/positive-pay-openapi.yaml#/paths/~1v1~1positivepay~1payments~1{paymentId}~1decisions~1{decisionType}
+  /v1/positivepay/payments/decisions/{decisionType}:
+    $ref: ./payment-api/positive-pay-openapi.yaml#/paths/~1v1~1positivepay~1payments~1decisions~1{decisionType}
+  /v3/payments/search:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1search
+  /v3/payments/creditrequest:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1creditrequest
+  /v4/payments/credit:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v4~1payments~1credit
+  /v5/payments/credit:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v5~1payments~1credit
+  /v3/payments/debitrequest:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1debitrequest
+  /v3/payments/booktransfer:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1booktransfer
+  /v3/payments/{paymentUID}:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}
+  /v3/payments/{paymentUID}/cancel:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}~1cancel
+  /v3/payments/{paymentUID}/return:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}~1return
+  /v3/payments/{paymentUID}/reverse:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}~1reverse
+  /api/gateway/v1/payments/waterfall:
+    $ref: ./payment-api/payments-openapi.yaml#/paths/~1api~1gateway~1v1~1payments~1waterfall
+  /customers:
+    $ref: ./customer-api/openapi.yaml#/paths/~1customers
+  /customers/{customerId}:
+    $ref: ./customer-api/openapi.yaml#/paths/~1customers~1{customerId}
+
+components:
+  schemas:
+    CreateCustomerRequest:
+      $ref: ./customer-api/openapi.yaml#/components/schemas/CreateCustomerRequest
+    Customer:
+      $ref: ./customer-api/openapi.yaml#/components/schemas/Customer
+  securitySchemes:
+    oAuth2:
+      $ref: ./payment-api/payments-openapi.yaml#/components/securitySchemes/oAuth2
+    bearerAuth:
+      $ref: ./customer-api/openapi.yaml#/components/securitySchemes/bearerAuth

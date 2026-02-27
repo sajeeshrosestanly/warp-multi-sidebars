@@ -44,6 +44,68 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
   box-shadow: 0 14px 34px rgba(16, 38, 77, 0.12);
   position: relative;
   overflow: hidden;
+  display: block;
+}
+
+.api-hub-hero-main {
+  min-width: 0;
+}
+
+.api-fullspec-link {
+  text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 34%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ifm-navbar-background-color, #ffffff) 92%, #ffffff 8%) 0%,
+    color-mix(in srgb, var(--ifm-navbar-background-color, #ffffff) 84%, var(--ifm-color-primary) 16%) 100%
+  );
+  border-radius: 999px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-left: auto;
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--ifm-color-primary) 24%, transparent);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, filter 160ms ease;
+}
+
+.api-fullspec-link:hover {
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 58%, transparent);
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--ifm-color-primary) 34%, transparent);
+  transform: translateY(-1px) scale(1.01);
+  filter: saturate(1.08);
+}
+
+.api-fullspec-icon {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid #cfddf8;
+  background: linear-gradient(135deg, #ffffff 0%, #edf3ff 100%);
+  color: #1e3b6f;
+  font-size: 9px;
+  line-height: 22px;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.api-fullspec-label {
+  color: color-mix(in srgb, var(--ifm-navbar-link-color, #10264d) 88%, var(--ifm-color-primary) 12%);
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.api-fullspec-arrow {
+  color: #375e9e;
+  font-size: 11px;
+  line-height: 11px;
+  font-weight: 700;
 }
 
 .api-hub-hero::after {
@@ -476,6 +538,31 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
   border-color: #2e4370;
   background: linear-gradient(130deg, #162338 0%, #1a2f4f 62%, #2f2852 100%);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+:root.dark .api-fullspec-link {
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 45%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ifm-navbar-background-color, #1a2b46) 90%, #1f3760 10%) 0%,
+    color-mix(in srgb, var(--ifm-navbar-background-color, #1a2b46) 78%, var(--ifm-color-primary) 22%) 100%
+  );
+}
+
+:root.dark .api-fullspec-link:hover {
+  border-color: #7f61d9;
+  box-shadow: 0 14px 28px rgba(50, 30, 100, 0.45);
+}
+
+:root.dark .api-fullspec-icon {
+  border-color: #3c5e95;
+  background: #203557;
+  color: #dbe9ff;
+}
+
+:root.dark .api-fullspec-label,
+:root.dark .api-fullspec-arrow {
+  color: #e7efff;
 }
 
 :root.dark .api-hub-hero .eyebrow,

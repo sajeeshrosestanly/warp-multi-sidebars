@@ -1,0 +1,176 @@
+openapi: 3.1.0
+info:
+  title: Positive Pay API
+  version: 2.6.6
+servers:
+  - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: Authentication
+    variables:
+      tenant:
+        description: Tenant
+        default: sandbox
+security:
+  - oAuth2:
+      - roles
+tags:
+  - name: Positive Pay
+    description: >
+      Postive Pay Rules APIs enable third-parties, bank's customers and
+      downstream partners to define postive rules for ACH debits or Fedwire
+      drawdown requests or RFP (Request For Pay) request.
+
+
+      Postive Pay Exeption APIs enable users to approve or reject the exceptions identified by the postive pay rules engine.
+x-tagGroups:
+  - name: Positive Pay APIs
+    tags:
+      - Positive Pay
+paths:
+  "/v1/positivepay/payments/{paymentId}/decisions/{decisionType}":
+    put:
+      tags:
+        - Positive Pay
+      summary: Approve or Reject PositivePay Exception
+      description: |
+        Approve or Reject Positive Pay Exception of a payment.
+        - ⚠️ This endpoint is deprecated and will be removed.
+        - Please switch to the v2 decision-specific endpoints:
+        - **Approve** - `/v2/positivepay/exception/{paymentId}/approve`
+        - **Reject** - `/v2/positivepay/exception/{paymentId}/reject`
+      operationId: approveorrejectexception
+      parameters:
+        - name: paymentId
+          in: path
+          description: Payment unique identifier.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: decisionType
+          in: path
+          description: Allowed values are Approve or Reject.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApproveOrRejectPositivePayExceptionResponse"
+        "400":
+          description: Bad request
+        "401":
+          description: You are not authorized to access the resource
+        "403":
+          description: Accessing the resource you were trying to reach is forbidden
+        "404":
+          description: The resource you were trying to reach is not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Error"
+        "503":
+          description: Service unavailable
+        default:
+          description: Approve or Reject Positive Pay Exception Response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApproveOrRejectPositivePayExceptionResponse"
+      deprecated: true
+  "/v1/positivepay/payments/decisions/{decisionType}":
+    patch:
+      tags:
+        - Positive Pay
+      summary: Batch Approval or Rejection of Positive Pay Exceptions
+      description: Allows batch processing of Positive Pay exceptions by approving or
+        rejecting them based on the specified decision type.
+      operationId: approveBatchExceptions
+      parameters:
+        - name: decisionType
+          in: path
+          description: Specifies the action to be taken on the Positive Pay exceptions.
+            Accepted values are `approve` or `reject`.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - approve
+              - reject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveAllPositivePayExceptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    paymentId:
+                      type: string
+                      description: Payment ID.
+                      example: "113444"
+                    message:
+                      type: string
+                      description: Exception message.
+                      example: Exception approved successfully.
+        "400":
+          description: Bad Request - Missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                        code:
+                          type: string
+        "401":
+          description: You are not authorized to access the resource
+        "403":
+          description: Accessing the resource you were trying to reach is forbidden
+        "404":
+          description: The resource you were trying to reach is not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Error"
+        "503":
+          description: Service unavailable
+components:
+  schemas:
+    ApproveOrRejectPositivePayExceptionResponse:
+      $ref: ./payments-openapi.yaml#/components/schemas/ApproveOrRejectPositivePayExceptionResponse
+    ApproveAllPositivePayExceptionRequest:
+      $ref: ./payments-openapi.yaml#/components/schemas/ApproveAllPositivePayExceptionRequest
+    Error:
+      $ref: ./payments-openapi.yaml#/components/schemas/Error
+  securitySchemes:
+    oAuth2:
+      $ref: ./payments-openapi.yaml#/components/securitySchemes/oAuth2

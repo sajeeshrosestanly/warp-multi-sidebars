@@ -12,10 +12,16 @@ servers:
   - url: https://sandbox.api.finzly.io
     description: Finzly sandbox (placeholder)
 security:
+  - oAuth2:
+      - roles
   - bearerAuth: []
 tags:
   - name: Customer APIs
     description: Sample endpoints for onboarding and retrieving customer profiles.
+x-tagGroups:
+  - name: Customer APIs
+    tags:
+      - Customer APIs
 paths:
   /customers:
     post:
@@ -136,6 +142,15 @@ components:
           example: /problems/invalid-request/abcd1234
 
   securitySchemes:
+    oAuth2:
+      type: oauth2
+      description: Finzly Connect API uses OAuth 2.0 authcodeflow with PKCE for end user authorization or implicit grant flow for system API accounts. A support request to Finzly is required to use implicit grant flow.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sandbox-security-uat.finzly.io/auth
+          tokenUrl: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+          scopes:
+            roles: manage
     bearerAuth:
       type: http
       scheme: bearer

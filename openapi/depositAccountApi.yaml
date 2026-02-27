@@ -1,0 +1,942 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Deposit Account",
+    "version" : "1.0.4"
+  },
+  "servers" : [ {
+    "url" : "https://banka-digitalbanking-dev.finzly.net/api/openbanking",
+    "description" : "FinzlyConnect Customer APIs",
+    "variables" : {
+      "tenant" : {
+        "description" : "BankOS tenant code",
+        "default" : "sandbox"
+      }
+    }
+  } ],
+  "security" : [ {
+    "oAuth2" : [ "roles" ]
+  } ],
+  "paths" : {
+    "/v2/{customerUID}/virtual-accounts" : {
+      "post" : {
+        "tags" : [ "Virtual Account" ],
+        "summary" : "Create virtual account",
+        "description" : "Create a new virtual account for a customer with account name, master account number, limit, and limit amount",
+        "operationId" : "createVirtualAccount",
+        "parameters" : [ {
+          "name" : "customerUID",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Customer UID"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Account Info",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/customerUID_virtualaccounts_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualAccount"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "You are not authorized to access the resource"
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden"
+          },
+          "404" : {
+            "description" : "The resource you were trying to reach is not found"
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          },
+          "default" : {
+            "description" : "Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualAccount"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/{customerUID}/virtual-accounts/{accountNumber}" : {
+      "get" : {
+        "tags" : [ "Virtual Account" ],
+        "summary" : "Get virtual account",
+        "description" : "Retrieve detailed information about a specific virtual account",
+        "operationId" : "getVirtualAccountByAccountNumber",
+        "parameters" : [ {
+          "name" : "customerUID",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Customer Id"
+          }
+        }, {
+          "name" : "accountNumber",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "accountNumber"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualAccount"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "You are not authorized to access the resource"
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden"
+          },
+          "404" : {
+            "description" : "The resource you were trying to reach is not found"
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          },
+          "default" : {
+            "description" : "Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualAccount"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Virtual Account" ],
+        "summary" : "Update virtual account",
+        "description" : "Modify virtual account details such as account name, limit, limit amount, and purpose",
+        "operationId" : "updateVirtualAccount",
+        "parameters" : [ {
+          "name" : "customerUID",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Customer UID"
+          }
+        }, {
+          "name" : "accountNumber",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Account Id"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Account Info",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/virtualaccounts_accountNumber_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualAccount"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "You are not authorized to access the resource"
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden"
+          },
+          "404" : {
+            "description" : "The resource you were trying to reach is not found"
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          },
+          "default" : {
+            "description" : "Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualAccount"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Virtual Account" ],
+        "summary" : "close a virtual account",
+        "description" : "Close a virtual account",
+        "operationId" : "closeVirtualAccount",
+        "parameters" : [ {
+          "name" : "customerUID",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Unique identifier of the customer"
+          }
+        }, {
+          "name" : "accountNumber",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "accountNumber"
+          }
+        }, {
+          "name" : "comments",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "comments for closing virtual account"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "You are not authorized to access the resource"
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden"
+          },
+          "404" : {
+            "description" : "The resource you were trying to reach is not found"
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/v2/virtual-accounts/search" : {
+      "post" : {
+        "tags" : [ "Virtual Account" ],
+        "summary" : "Search virtual accounts",
+        "description" : "Search and filter virtual accounts based on various criteria like account name, master account number, purpose, dates, balances, and status",
+        "operationId" : "searchVirtualAccounts",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "description" : "Page number",
+            "default" : 0
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "description" : "Page size",
+            "default" : 10
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Account Info",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/virtualaccounts_search_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "You are not authorized to access the resource"
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden"
+          },
+          "404" : {
+            "description" : "The resource you were trying to reach is not found"
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          },
+          "default" : {
+            "description" : "Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/virtual-accounts/transactions/search" : {
+      "post" : {
+        "tags" : [ "Virtual Account" ],
+        "summary" : "Search virtual account transactions",
+        "description" : "Search and filter transactions based on customer UID, account number, direction (Inbound/Outbound), and other criteria",
+        "operationId" : "searchVirtualAccountTransaction",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "description" : "Page number",
+            "default" : 0
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "description" : "Page size",
+            "default" : 10
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Transaction Info",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/transactions_search_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "You are not authorized to access the resource"
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden"
+          },
+          "404" : {
+            "description" : "The resource you were trying to reach is not found"
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          },
+          "default" : {
+            "description" : "Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code assigned by the system",
+            "example" : "invalidMethod"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Error description to provide addtional details about the error code",
+            "example" : "Invalid HTTP method used"
+          }
+        }
+      },
+      "VirtualAccount" : {
+        "properties" : {
+          "accountName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Name for the account. Only letters, numbers, and spaces are allowed.",
+            "example" : "xyz 123"
+          },
+          "accountNumber" : {
+            "type" : "number",
+            "description" : "Unique account number assigned to the virtual account",
+            "example" : 1234567890
+          },
+          "externalAccountReference" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "External account reference",
+            "example" : "123456"
+          },
+          "routingNumber" : {
+            "type" : "number",
+            "description" : "Bank routing number associated with the virtual account",
+            "example" : 123456789
+          },
+          "accountBalance" : {
+            "type" : "number",
+            "description" : "Current balance of the virtual account",
+            "format" : "double",
+            "example" : 10000.5
+          },
+          "accountStatus" : {
+            "type" : "string",
+            "description" : "Current status of the virtual account",
+            "example" : "Active",
+            "enum" : [ "Active", "Closed", "Suspended" ]
+          },
+          "accountPurpose" : {
+            "type" : "string",
+            "description" : "Purpose or intended use of the virtual account",
+            "example" : "Payment processing"
+          },
+          "accountCreatedOn" : {
+            "type" : "string",
+            "description" : "Date and time when the virtual account was created",
+            "format" : "datetime",
+            "example" : "2024-01-15T10:30:00Z"
+          },
+          "customerShortName" : {
+            "type" : "string",
+            "description" : "Short name or abbreviation of the customer",
+            "example" : "ABC Corp"
+          },
+          "customerLegalName" : {
+            "type" : "string",
+            "description" : "Legal name of the customer who owns the virtual account",
+            "example" : "ABC Corporation Inc."
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "Unique identifier of the customer",
+            "example" : "CUST001"
+          },
+          "customerEmailAddress" : {
+            "type" : "string",
+            "description" : "Email address of the customer",
+            "format" : "email",
+            "example" : "contact@abccorp.com"
+          },
+          "customerPhoneNumber" : {
+            "type" : "string",
+            "description" : "Phone number of the customer including country code",
+            "example" : "+1-555-123-4567"
+          },
+          "masterAccountName" : {
+            "type" : "string",
+            "description" : "Name of the master account associated with the virtual account",
+            "example" : "Master Account 001"
+          },
+          "masterAccountNumber" : {
+            "type" : "string",
+            "description" : "Master Account Number of the partner",
+            "example" : "MASTER001"
+          },
+          "limit" : {
+            "type" : "string",
+            "description" : "limit",
+            "enum" : [ "Monthly", "Quarterly", "HalfYearly", "Annually" ]
+          },
+          "limitAmount" : {
+            "type" : "number",
+            "description" : "Maximum transaction limit amount for the specified limit period",
+            "format" : "double",
+            "example" : 50000.0
+          },
+          "purpose" : {
+            "type" : "string",
+            "description" : "Purpose or intended use of the virtual account",
+            "example" : "Payment processing"
+          }
+        }
+      },
+      "Transaction" : {
+        "properties" : {
+          "transactionId" : {
+            "type" : "string",
+            "description" : "Transaction reference number"
+          },
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "Unique reference number for the transaction",
+            "example" : "TXN-2024-001234"
+          },
+          "paymentReferenceNo" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "accountName" : {
+            "type" : "string",
+            "description" : "Name of the virtual account associated with the transaction"
+          },
+          "accountNumber" : {
+            "type" : "string",
+            "description" : "Virtual account number associated with the transaction"
+          },
+          "amount" : {
+            "type" : "number",
+            "description" : "Transaction amount",
+            "format" : "double"
+          },
+          "feeAmount" : {
+            "type" : "number",
+            "description" : "Fee amount charged for the transaction",
+            "format" : "double"
+          },
+          "currency" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Currency code for the transaction (ISO 4217 format, e.g., USD, EUR)"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description or memo for the transaction"
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "Date when the transaction occurred",
+            "format" : "date"
+          },
+          "paymentMethod" : {
+            "type" : "string",
+            "description" : "Method used for the payment",
+            "enum" : [ "ACH", "WIRE", "CARD" ]
+          },
+          "direction" : {
+            "type" : "string",
+            "description" : "Direction of the transaction - Inbound (money coming in) or Outbound (money going out)",
+            "enum" : [ "Inbound", "Outbound" ]
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Current status of the transaction (e.g., Processed, Pending, Failed)"
+          },
+          "postedOn" : {
+            "type" : "string",
+            "description" : "Date and time when the transaction was posted",
+            "format" : "datetime"
+          },
+          "postedBy" : {
+            "type" : "string",
+            "description" : "User ID or system identifier who posted the transaction"
+          }
+        }
+      },
+      "Pagination" : {
+        "properties" : {
+          "totalRecords" : {
+            "type" : "number",
+            "description" : "Total number of records exist in the system for a given filter",
+            "format" : "integer",
+            "example" : 100
+          },
+          "totalPages" : {
+            "type" : "number",
+            "description" : "Total number of pages",
+            "format" : "integer",
+            "example" : 10
+          },
+          "pageReturned" : {
+            "type" : "number",
+            "description" : "Current number of page returned",
+            "format" : "integer",
+            "example" : 2
+          },
+          "pageSize" : {
+            "type" : "number",
+            "description" : "Total number of records in a given pages",
+            "format" : "integer",
+            "example" : 10
+          }
+        }
+      },
+      "customerUID_virtualaccounts_body" : {
+        "required" : [ "accountName", "masterAccountNumber", "productCode" ],
+        "properties" : {
+          "accountName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Name for the account. Only letters, numbers, and spaces are allowed.",
+            "example" : "xyz 123"
+          },
+          "productCode" : {
+            "type" : "string",
+            "description" : "Product code that has been created in depositr.",
+            "example" : "Product123"
+          },
+          "masterAccountNumber" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Master Account Number",
+            "example" : "xyz 123"
+          },
+          "purpose" : {
+            "type" : "string",
+            "description" : "purpose"
+          },
+          "submittedBy" : {
+            "type" : "string",
+            "description" : "User who submitted the request"
+          }
+        }
+      },
+      "virtualaccounts_accountNumber_body" : {
+        "required" : [ "accountName", "masterAccountNumber", "productCode" ],
+        "properties" : {
+          "accountName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Name for the account. Only letters, numbers, and spaces are allowed.",
+            "example" : "xyz 123"
+          },
+          "productCode" : {
+            "type" : "string",
+            "description" : "Product code that has been created in depositr.",
+            "example" : "Product123"
+          },
+          "masterAccountNumber" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Master Account Number",
+            "example" : "xyz 123"
+          },
+          "purpose" : {
+            "type" : "string",
+            "description" : "purpose"
+          },
+          "submittedBy" : {
+            "type" : "string",
+            "description" : "User who submitted the request"
+          }
+        }
+      },
+      "virtualaccounts_search_body" : {
+        "properties" : {
+          "partnerId" : {
+            "type" : "string"
+          },
+          "customerUID" : {
+            "type" : "string",
+            "description" : "Unique Customer Id"
+          },
+          "accountName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Name for the account. Only letters, numbers, and spaces are allowed.",
+            "example" : "xyz 123"
+          },
+          "masterAccountNumber" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Name for the account. Only letters, numbers, and spaces are allowed.",
+            "example" : "xyz 123"
+          },
+          "purpose" : {
+            "type" : "string",
+            "description" : "purpose"
+          },
+          "createdDateFrom" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "createdDateTo" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "lastUpdatedDateFrom" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "lastUpdatedDateTo" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "balanceFrom" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "balanceTo" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "status" : {
+            "type" : "array",
+            "description" : "List of statuses to filter virtual accounts",
+            "example" : [ "Active", "Closed" ],
+            "items" : {
+              "type" : "string",
+              "enum" : [ "Active", "Closed" ]
+            }
+          },
+          "externalAccountReference" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "External account reference",
+            "example" : "123456"
+          }
+        }
+      },
+      "inline_response_200" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VirtualAccount"
+            }
+          },
+          "pagination" : {
+            "$ref" : "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "transactions_search_body" : {
+        "type" : "object",
+        "properties" : {
+          "customerUID" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "accountNumber" : {
+            "type" : "string"
+          },
+          "creditDebitType" : {
+            "type" : "string",
+            "enum" : [ "Credit", "Debit" ]
+          },
+          "paymentReferenceNo" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "externalReferenceId" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "When a transaction is manually posted from the UI, it initially moves to a 'Pending' status. After approval by a second user, the status changes to 'Submitted'. Once the transaction is successfully posted to the Master Account, it transitions to 'Processed'. If the posting fails at any stage, the transaction moves to a 'Failed' status.",
+            "enum" : [ "Submitted", "Pending", "Processed", "Failed" ]
+          },
+          "fromDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "toDate" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }
+      },
+      "inline_response_200_1" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Transaction"
+            }
+          },
+          "pagination" : {
+            "$ref" : "#/components/schemas/Pagination"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "oAuth2" : {
+        "type" : "oauth2",
+        "description" : "BankOS OpenBanking API uses OAuth 2.0 authcodeflow with PKCE for end user authorization or implicit grant flow for system API accounts. A support request to Finzly is required to use implicit grant flow.",
+        "flows" : {
+          "clientCredentials" : {
+            "tokenUrl" : "https://security-dev1.finzly.net/auth/realms/BANKOS-DEV-BANKA-CUSTOMER/protocol/openid-connect/token",
+            "scopes" : {
+              "roles" : "Access roles"
+            }
+          }
+        }
+      }
+    }
+  }
+}

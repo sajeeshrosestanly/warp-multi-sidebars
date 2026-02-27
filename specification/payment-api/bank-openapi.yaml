@@ -1,0 +1,447 @@
+openapi: 3.1.0
+info:
+  title: Bank API
+  version: 2.6.6
+servers:
+  - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: Authentication
+    variables:
+      tenant:
+        description: Tenant
+        default: sandbox
+security:
+  - oAuth2:
+      - roles
+tags:
+  - name: Bank
+    description: To fetch the bank info by routing number.
+x-tagGroups:
+  - name: Bank APIs
+    tags:
+      - Bank
+paths:
+  "/v1/banks/{routingNumber}":
+    get:
+      tags:
+        - Bank
+      summary: To fetch the bank information.
+      description: |
+        To fetch the bank details based on bank routing number.
+        This endpoint is deprecated and will be removed in the future. Please switch to `/v1/banks`.
+      operationId: fetchBankInfo
+      parameters:
+        - name: routingNumber
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: Bank routing number.
+      responses:
+        default:
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankResponse"
+        "200":
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankResponse"
+        "400":
+          description: bad input parameter environment
+        "401":
+          description: You are not authorized to access the resource
+        "403":
+          description: Accessing the resource you were trying to reach is forbidden
+        "404":
+          description: The resource you were trying to reach is not found
+        "405":
+          description: bad input parameter environment
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Error"
+        "503":
+          description: Service unavailable
+      deprecated: true
+
+  "/v1/banks/search/{routingNumber}":
+    get:
+      tags:
+        - Bank
+      summary: To search the bank information.
+      description: To search the bank details based on bank routing number.
+      operationId: searchBankInfo
+      parameters:
+        - name: routingNumber
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: First three or more characters of routing number.
+      responses:
+        default:
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankSearchResponse"
+        "200":
+          description: Successfully processed request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankSearchResponse"
+        "400":
+          description: bad input parameter environment
+        "401":
+          description: You are not authorized to access the resource
+        "403":
+          description: Accessing the resource you were trying to reach is forbidden
+        "404":
+          description: The resource you were trying to reach is not found
+        "405":
+          description: bad input parameter environment
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Error"
+        "503":
+          description: Service unavailable
+
+  "/v1/banks":
+    get:
+      tags:
+        - Bank
+      summary: Fetch Bank Information
+      description: Retrieve detailed bank information using a BIC, IBAN, or NID.
+      operationId: getbank
+      parameters:
+        - name: bankId
+          in: query
+          description: |
+            The identifier of the bank.
+            Accepted formats:
+              - NID: only digits (0-9), exact 9 characters in length
+              - BIC: uppercase letters (A-Z) and digits (0-9), 8 or 11 characters in length
+              - IBAN: uppercase letters (A-Z) and digits (0-9), upto 34 characters in length.
+          required: true
+          style: form
+          explode: true
+          schema:
+            maxLength: 34
+            type: string
+        - name: bankIdType
+          in: query
+          description: The type of bank identifier. When set to "IBAN", countryCode is required.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - NID
+              - BIC
+              - IBAN
+        - name: countryCode
+          in: query
+          description: Required only when bankIdType is "IBAN". The ISO 3166 country code.
+          required: false
+          style: form
+          explode: true
+          schema:
+            pattern: ^[a-zA-Z]+$
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankInfoResponse"
+        "400":
+          description: Bad Request - Missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        "401":
+          description: You are not authorized to access the resource
+        "403":
+          description: Accessing the resource you were trying to reach is forbidden
+        "404":
+          description: The resource you were trying to reach is not found
+        "405":
+          description: bad input parameter environment
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Error"
+        "503":
+          description: Service unavailable
+
+components:
+  schemas:
+    BankResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message corresponding to the error code indicating the issue in API call along with the reason.
+          example: "<Reason>"
+        routingNumber:
+          $ref: "#/components/schemas/routingNumber"
+
+    BankSearchResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message corresponding to the error code indicating the issue in API call along with the reason.
+          example: "<Reason>"
+        routingNumber:
+          type: array
+          items:
+            $ref: "#/components/schemas/routingNumber"
+
+    routingNumber:
+      type: object
+      properties:
+        institutionName:
+          type: string
+          description: Bank Name. This is an optional field.
+          example: ABC Bank
+        nationalIdName:
+          type: string
+          description: nationalId name. This is an optional field.
+          example: ABA
+        nationalId:
+          type: string
+          description: bank routing number. This is not an optional field.
+          example: "123656698"
+        recordTypeCode:
+          type: string
+          description: record type code. This is an optional field.
+          example: SEND
+        routingAddress:
+          $ref: "#/components/schemas/routingAddress"
+        deliveryMethods:
+          type: array
+          description: List of delivery methods.
+          example:
+            - ACH
+            - FedNow
+          items:
+            type: string
+        fedwireRoutingInfo:
+          $ref: "#/components/schemas/fedwireRoutingInfo"
+        rtpRoutingInfo:
+          $ref: "#/components/schemas/rtpRoutingInfo"
+        fedNowRoutingInfo:
+          $ref: "#/components/schemas/fedNowRoutingInfo"
+
+    routingAddress:
+      type: object
+      properties:
+        addressLine1:
+          maxLength: 35
+          type: string
+          description: Bank address line 1
+          example: 111 My Street
+        addressLine2:
+          maxLength: 35
+          type: string
+          description: Bank address line 2. This is an optional field.
+          example: Suite 210
+        city:
+          maxLength: 35
+          type: string
+          description: Bank City. This is an optional field.
+          example: Charlotte
+        stateCode:
+          maxLength: 35
+          type: string
+          description: Bank State. This is an optional field.
+          example: North Carolina
+        zipCode:
+          maxLength: 35
+          type: string
+          description: Country specific postal/zip code. This is an optional field.
+          example: "28269"
+        countryCode:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: Country codes per ISO 3166.
+          example: US
+        country:
+          maxLength: 20
+          type: string
+          description: Country name. This is an optional field.
+          example: USA
+
+    fedwireRoutingInfo:
+      type: object
+      properties:
+        fundsTransferStatus:
+          type: boolean
+          description: boolean value. This is an optional field.
+          example: false
+        fundsSettlementOnly:
+          type: boolean
+          description: boolean value. This is an optional field.
+          example: false
+        securityTransferStatus:
+          type: boolean
+          description: boolean value. This is an optional field.
+          example: false
+
+    rtpRoutingInfo:
+      type: object
+      properties:
+        participantId:
+          type: string
+          description: participant Id. This is an optional field.
+        services:
+          type: array
+          description: List of services.
+          example:
+            - CRDT
+            - RFI
+            - ACK
+          items:
+            type: string
+        receivingConnection:
+          type: string
+          description: receiving connection. This is an optional field.
+        signOnStatus:
+          type: string
+          description: signOn status. This is an optional field.
+        participantActivationDate:
+          type: string
+          description: participant activation date. This is an optional field.
+        status:
+          type: string
+          description: status. This is an optional field.
+        connectionStatus:
+          type: string
+          description: connection status. This is an optional field.
+
+    fedNowRoutingInfo:
+      type: object
+      properties:
+        services:
+          type: array
+          description: List of services.
+          example:
+            - CRDT
+            - RFI
+            - ACK
+          items:
+            type: string
+        status:
+          type: string
+          description: status. This is an optional field.
+        connectionStatus:
+          type: string
+          description: connection status. This is an optional field.
+
+    BankInfoResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            institutionName:
+              type: string
+              description: Bank name.
+              example: 1ST SOURCE BANK
+            streetAddress1:
+              type: string
+              description: Bank address1.
+              example: PO BOX 1602
+            streetAddress2:
+              type: string
+              description: Bank address2.
+              nullable: true
+              example: PO
+            city:
+              type: string
+              description: Bank city.
+              example: SOUTH BEND
+            zipCode:
+              type: string
+              description: Bank zip code.
+              example: "46634"
+            countryName:
+              type: string
+              description: Bank country name.
+              example: USA
+            isoCountryCode:
+              type: string
+              description: Bank country code.
+              example: US
+            bic:
+              type: string
+              description: Bank bic.
+              nullable: true
+              example: INGDDEFFXXX
+            branchBic:
+              type: string
+              description: Bank branch bic.
+              nullable: true
+              example: XXX
+            nationalIdType:
+              type: string
+              description: Bank national identifier type.
+              example: ABA
+            nationalId:
+              type: string
+              description: Bank national identifier.
+              example: "071212128"
+            deliveryMethods:
+              type: array
+              description: List of delivery methods.
+              example:
+                - ACH
+                - RTP
+              items:
+                type: string
+
+    BadRequestResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              code:
+                type: string
+
+    Error:
+      $ref: ./payments-openapi.yaml#/components/schemas/Error
+
+  securitySchemes:
+    oAuth2:
+      $ref: ./payments-openapi.yaml#/components/securitySchemes/oAuth2

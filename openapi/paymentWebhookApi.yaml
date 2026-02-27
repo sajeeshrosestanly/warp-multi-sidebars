@@ -1,0 +1,1483 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Payment Webhook",
+    "version" : "1.3.1"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "paths" : {
+    "/payments" : {
+      "post" : {
+        "tags" : [ "Payment Webhook Notifications." ],
+        "summary" : "Payment details",
+        "description" : "Webhook API allows Finzly customers to get real-time notifications on the payment data that belongs to them based on the configured payment events such as payment is Processed, Cancelled, HOLD, etc...",
+        "operationId" : "notifyPaymentStatus",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/payment"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully posted payment status"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "402" : {
+            "description" : "Request Failed"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "409" : {
+            "description" : "The request conflict with other requests"
+          },
+          "429" : {
+            "description" : "Too many requests"
+          },
+          "500" : {
+            "description" : "Server Errored out."
+          },
+          "502" : {
+            "description" : "Server Errored out"
+          },
+          "503" : {
+            "description" : "Server Errored out"
+          },
+          "504" : {
+            "description" : "Server Errored out"
+          }
+        }
+      }
+    },
+    "/transaction/webhook" : {
+      "post" : {
+        "tags" : [ "Ledger Transaction Webhook" ],
+        "summary" : "Transaction Update Webhook",
+        "description" : "Receives transaction update notifications via webhook. This endpoint is called when transaction status changes occur, such as when a transaction moves from SUBMITTED to PROCESSED status.",
+        "operationId" : "handleTransactionUpdate",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TransactionWebhookRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Webhook processed successfully"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "405" : {
+            "description" : "Method not allowed"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "payment" : {
+        "type" : "object",
+        "properties" : {
+          "paymentId" : {
+            "maxLength" : 11,
+            "type" : "integer",
+            "description" : "Unique Payment Identifier",
+            "example" : 8982
+          },
+          "externalReferenceId" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "External reference id set by the originator system",
+            "example" : "197297287383"
+          },
+          "sourceReferenceId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "The bulk file id set by the system when the payment is originated via bulk file upload",
+            "example" : "123"
+          },
+          "bulkFileName" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Bulk file name if the payment is originated from the FTP channel",
+            "example" : "achfile198191.ach"
+          },
+          "bulkFileNumber" : {
+            "maxLength" : 12,
+            "type" : "integer",
+            "description" : "Bulk File Unique Identifier if the payment is originated from the FTP channel",
+            "example" : 1231
+          },
+          "counterParty" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Legal entity (Counterparty) shortname associated with the payment",
+            "example" : "LESHORTNAME"
+          },
+          "channel" : {
+            "type" : "string",
+            "description" : "Payment origination channel such as API, FTP, ONLINE",
+            "example" : "API"
+          },
+          "paymentStatus" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Payment Status such as VALIDATED, VALIDATION_FAILURE, AUTHORIZED, MEMO_POSTED, READY_TO_TRANSMIT, TRANSMITTED,PROCESSED, CANCELLED",
+            "example" : "VALIDATION_FAILURE"
+          },
+          "validationFailureMessages" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ValidationFailureMessages"
+            }
+          },
+          "deliveryDate" : {
+            "type" : "string",
+            "description" : "Payment delivery or effective entry date in yyyy-mm-dd format",
+            "format" : "date",
+            "example" : "2023-03-11"
+          },
+          "deliveryMethod" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "description" : "Delivery method associated with the payment such as ACH, FEDWIRE, RTP, FEDNOW, SWIFT",
+            "example" : "ACH"
+          },
+          "feeAmount" : {
+            "maximum" : 10000000000000000,
+            "minimum" : 0,
+            "type" : "number",
+            "description" : "Fee amount in USD",
+            "format" : "decimal",
+            "example" : 2
+          },
+          "paymentDate" : {
+            "type" : "string",
+            "description" : "Payment date in yyyy-mm-dd format",
+            "format" : "date",
+            "example" : "2023-03-10"
+          },
+          "paymentIOType" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Inbound or Outbound Payment Indicator.",
+            "example" : "IN"
+          },
+          "paymentNote1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Payment Notes",
+            "example" : "payment notes"
+          },
+          "paymentNote2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Additional Payment Notes",
+            "example" : "payment notes2"
+          },
+          "paymentRemittanceInfo" : {
+            "maxLength" : 80,
+            "type" : "string",
+            "description" : "Payment Remittance Information from NACHA addenda record",
+            "example" : "invoice #1233"
+          },
+          "paymentType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Type of Payment - Same Day or Regular ACH. Possible values are REGULAR_ACH, SAME_DAY_ACH, WIRE, BOOK_TRANSFER, REALTIME_RTP, REALTIME_FEDNOW, SPOT_SWIFT, SAME_DAY_SWIFT, NEXT_DAY_SWIFT",
+            "example" : "SAME_DAY_ACH"
+          },
+          "senderBankCountry" : {
+            "type" : "string",
+            "description" : "Sender bank country.",
+            "example" : "US"
+          },
+          "feeName" : {
+            "type" : "string",
+            "description" : "Fee name.",
+            "example" : "Custom"
+          },
+          "memoPostDate" : {
+            "type" : "string",
+            "description" : "Date when the memo posted.",
+            "example" : "11-31-2025"
+          },
+          "memoPostStatus" : {
+            "type" : "string",
+            "description" : "Memo post status",
+            "example" : "POSTED",
+            "enum" : [ "POSTED", "NOT_POSTED", "SUCCESS", "PARTIAL_SUCCESS", "FAILURE", "NOT_APPLICABLE", "NA_RETURN_INITIATED", "NA_RECEIVED_REVERSAL" ]
+          },
+          "memoPostFailureReason" : {
+            "type" : "string",
+            "description" : "Memo post failure reason.",
+            "example" : "reason"
+          },
+          "memoPostReferenceId" : {
+            "type" : "string",
+            "description" : "Memo post referenceId. It is an unique Id.",
+            "example" : "88787878"
+          },
+          "costCenter" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Cost center is a function within an organization that does not directly add to profit but still costs money to operate, such as the accounting, HR, or IT departments",
+            "example" : "12897"
+          },
+          "checkSerialNumber" : {
+            "type" : "string",
+            "description" : "Check serial number.",
+            "example" : "989978785454"
+          },
+          "receiverAccountNumber" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Account number of the receiver",
+            "example" : "27898978798"
+          },
+          "receiverAccountType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Account Type",
+            "example" : "Deposit or GL"
+          },
+          "receiverAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Address 1",
+            "example" : "9090 Adam street"
+          },
+          "receiverAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Address 2",
+            "example" : "Collelium drive"
+          },
+          "receiverCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver City",
+            "example" : "Charlotte"
+          },
+          "receiverAmount" : {
+            "maximum" : 10000000000000000,
+            "minimum" : 0,
+            "type" : "number",
+            "description" : "Amount received by recipient",
+            "format" : "decimal",
+            "example" : 95
+          },
+          "receiverBankName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Receiver Bank Name",
+            "example" : "XXY Bank"
+          },
+          "receiverBankState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank State",
+            "example" : "NC"
+          },
+          "receiverDiscretionaryData" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver discretionary data"
+          },
+          "receiverTemplateName" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Template Name",
+            "example" : "ABCTemplate"
+          },
+          "receiverName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Receiver name associated with the payment.",
+            "example" : "XYZ Name"
+          },
+          "originalReceiverName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "The original receiver name recieved from the payment network for the inbound payment request.",
+            "example" : "XYZ Name"
+          },
+          "receiverRoutingNumber" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Routing Number",
+            "example" : "044000037"
+          },
+          "receiverType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Type",
+            "example" : "Consumer"
+          },
+          "receiverState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver State",
+            "example" : "North Carolina "
+          },
+          "receiverZip" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Receiver zipcode",
+            "example" : "28269 "
+          },
+          "receiverCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver country",
+            "example" : "United States of America "
+          },
+          "receiverEmail" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Receiver Email",
+            "format" : "email",
+            "example" : "abc@gmail.com"
+          },
+          "receiverPhoneNumber" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Phone Number",
+            "example" : "12897789128"
+          },
+          "receiverId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Identifier (1)"
+          },
+          "receiverIdType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Identifier Type  (1)"
+          },
+          "receiverBankIdType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank Id Type",
+            "example" : "NID"
+          },
+          "receiverBankId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank Id Value",
+            "example" : "103000648"
+          },
+          "receiverBankAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank Address 1",
+            "example" : "1211 Adam street"
+          },
+          "receiverBankAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank Address 2",
+            "example" : "Adam street"
+          },
+          "receiverBankCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank City",
+            "example" : "Charlotte"
+          },
+          "receiverBankZip" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank Zip",
+            "example" : "28269 "
+          },
+          "receiverBankCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Receiver Bank Country",
+            "example" : "United States of America "
+          },
+          "intermediaryReceiverBankIdType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank ID Type",
+            "example" : "NID"
+          },
+          "intermediaryReceiverBankId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank ID value",
+            "example" : "044000037"
+          },
+          "intermediaryReceiverBankName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank Name",
+            "example" : "ABC Bank"
+          },
+          "intermediaryReceiverBankAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank Address 1",
+            "example" : "9090 Adam street"
+          },
+          "intermediaryReceiverBankAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank Address 2",
+            "example" : "Adam lane 1200"
+          },
+          "intermediaryReceiverBankCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank City",
+            "example" : "Charlotte"
+          },
+          "intermediaryReceiverBankState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank State",
+            "example" : "North Carolina "
+          },
+          "intermediaryReceiverBankZip" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank Zip/Postal Code",
+            "example" : "28269 "
+          },
+          "intermediaryReceiverBankCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Receiver Bank Country Name",
+            "example" : "United States of America "
+          },
+          "ultimateReceiverName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Ultimate receiver name. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Rec Name"
+          },
+          "ultimateReceiverAccountNumber" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver account number. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "679567838"
+          },
+          "ultimateReceiverTaxId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver company id. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "4987289187"
+          },
+          "ultimateReceiverAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver address 1. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "1211 Adam street"
+          },
+          "ultimateReceiverAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver address 2. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Collelium drive"
+          },
+          "ultimateReceiverCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver city. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Charlotte"
+          },
+          "ultimateReceiverState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver state. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "North Carolina"
+          },
+          "ultimateReceiverZip" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver zip or postal code. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "28269 "
+          },
+          "ultimateReceiverCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate receiver country. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "United States of America "
+          },
+          "networkRefId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "The reference ID recieved from the payment network.",
+            "example" : "134222"
+          },
+          "otherBankRefId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "The is applicable for the mainly SWIFT payment where addtional reference ID is used.",
+            "example" : "098989"
+          },
+          "forexContract" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "FX contract number associated with the SWIFT/International payment",
+            "example" : "12398"
+          },
+          "entryType" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Payment entry type such as CREDIT or DEBIT",
+            "example" : "CREDIT"
+          },
+          "senderName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Sender Name",
+            "example" : "XYZ Name"
+          },
+          "senderAmount" : {
+            "maximum" : 10000000000000000,
+            "minimum" : 0,
+            "type" : "number",
+            "description" : "Sender Amount",
+            "format" : "decimal",
+            "example" : 95
+          },
+          "senderAccountNumber" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "description" : "Sender Bank Account Number",
+            "example" : "90819918"
+          },
+          "senderRoutingNumber" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender's Routing Number",
+            "example" : "072000326"
+          },
+          "senderAccountType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Account Type such as Deposit or GL or Loan",
+            "example" : "DepositL"
+          },
+          "senderType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Type - Corporate, Consumer, Downstream Partner",
+            "example" : "Corporate"
+          },
+          "senderAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Address1",
+            "example" : "1123 ABC St."
+          },
+          "senderAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Address2",
+            "example" : "Unit 200"
+          },
+          "senderCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender City",
+            "example" : "Charlotte"
+          },
+          "senderState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender State"
+          },
+          "senderZip" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Sender zipcode",
+            "example" : "28267"
+          },
+          "senderCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender country",
+            "example" : "United States Of America"
+          },
+          "senderIdType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Identifier type the possible values are Driving License,Passport, Tax ID",
+            "example" : "Driving License"
+          },
+          "senderId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Identifier Value",
+            "example" : "C8798779"
+          },
+          "senderIdType2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Identifier type (2) the possible values are Driving License, Passport, Tax ID",
+            "example" : "Driving License"
+          },
+          "senderId2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Identifier Value (2)",
+            "example" : "5678943"
+          },
+          "senderEmail" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Sender Email",
+            "format" : "email",
+            "example" : "xyz@gmail.com"
+          },
+          "senderBankIdType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank Id Type",
+            "example" : "NID"
+          },
+          "senderBankId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank Id Value",
+            "example" : "103000648"
+          },
+          "senderBankName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Sender Bank name",
+            "example" : "ABC Bank"
+          },
+          "senderBankAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank Address 1",
+            "example" : "89798 street"
+          },
+          "senderBankAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank Address 2",
+            "example" : "Lane 200 "
+          },
+          "senderBankCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank City",
+            "example" : "BankCity"
+          },
+          "senderBankState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank State",
+            "example" : "BankState"
+          },
+          "senderBankZip" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender Bank Zip or Postal code",
+            "example" : "28289"
+          },
+          "senderDiscretionaryData" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Sender's Discretionary Data"
+          },
+          "intermediarySenderBankIdType" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank ID Type",
+            "example" : "NID or SWIFT"
+          },
+          "intermediarySenderBankId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank ID value",
+            "example" : "044000037"
+          },
+          "intermediarySenderBankName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank Name",
+            "example" : "IntermediaryBankName"
+          },
+          "intermediarySenderBankAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank Address 1",
+            "example" : "9090 Adam street"
+          },
+          "intermediarySenderBankAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank Address 2",
+            "example" : "Collelium drive"
+          },
+          "intermediarySenderBankCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank City",
+            "example" : "Charlotte"
+          },
+          "intermediarySenderBankState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank State",
+            "example" : "North Carolina "
+          },
+          "intermediarySenderBankZip" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank Zip/Postal Code",
+            "example" : "28269 "
+          },
+          "intermediarySenderBankCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Intermediary Sender Bank Country Name",
+            "example" : "United States of America "
+          },
+          "ultimateSenderName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Ultimate sender name. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Name"
+          },
+          "ultimateSenderAccountNumber" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender account number. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "987656789"
+          },
+          "ultimateSenderAddress1" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender address 1. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Address1"
+          },
+          "ultimateSenderAddress2" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender address 2. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Address2"
+          },
+          "ultimateSenderTaxId" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender company id. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "7876789287"
+          },
+          "ultimateSenderCity" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender city. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "Charlotte"
+          },
+          "ultimateSenderState" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender state. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "NC"
+          },
+          "ultimateSenderZip" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender zip or postal code. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "23434"
+          },
+          "ultimateSenderCountry" : {
+            "maxLength" : 35,
+            "type" : "string",
+            "description" : "Ultimate sender country. This will be used for the fintech scenario when the virtual account range is used to process a payment.",
+            "example" : "United States of America"
+          },
+          "paymentNocDetails" : {
+            "$ref" : "#/components/schemas/PaymentNocDetails"
+          },
+          "iMad" : {
+            "type" : "string",
+            "description" : "It is a unique number given to each FedWire payment when using the Federal Reserve Bank Service and can be used to investigate and track wire transfers",
+            "example" : "20220627MMQCTR7B000012"
+          },
+          "oMad" : {
+            "type" : "string",
+            "description" : "The OMAD indicates a unique number assigned to each transfer providing delivery-related information",
+            "example" : "0328QMGFNP6400002503281343FT0120232023"
+          },
+          "originatorToBeneficiaryInformation" : {
+            "maxLength" : 140,
+            "type" : "string",
+            "description" : "The OBI details",
+            "example" : "OBI Notes"
+          },
+          "senderToReceiverInfo" : {
+            "maxLength" : 210,
+            "type" : "string",
+            "description" : "Sender to Receiver details. This field replaces `senderToRecieverInfo` due to a previous typo.",
+            "example" : "Notes"
+          },
+          "referenceForBeneficiary" : {
+            "maxLength" : 16,
+            "type" : "string",
+            "description" : "This is applicable for the fedwire payment where the local instrument set to COVS. This specifies the reference details for the beneficiary.",
+            "example" : "RefForBeneficiary Details"
+          },
+          "requestMethod" : {
+            "maxLength" : 140,
+            "type" : "string",
+            "description" : "Request Method associated with the payment origination",
+            "example" : "WALK-IN"
+          },
+          "fedwireBusinessFunctionCode" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Fedwire busines function code",
+            "example" : "CTR"
+          },
+          "fedwireDetailsOfCharge" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Fedwire details of charge",
+            "example" : "SHA"
+          },
+          "fedwireComments" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Fedwire comments",
+            "example" : "comments notes"
+          },
+          "fiToFiInformation" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "FI to FI Details",
+            "example" : "notes"
+          },
+          "beneficiaryFIAdviceCode" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Beneficiary FI Advice Code",
+            "example" : "LTR"
+          },
+          "beneficiaryFIAdviceInformation" : {
+            "$ref" : "#/components/schemas/BeneficiaryFIAdviceInformation"
+          },
+          "beneficiaryAdviceCode" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Beneficiary Advice Code",
+            "example" : "LTR"
+          },
+          "beneficiaryAdviceInformation" : {
+            "$ref" : "#/components/schemas/BeneficiaryFIAdviceInformation"
+          },
+          "beneficiaryFIInformation" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Beneficiary FI Information",
+            "example" : "notes"
+          },
+          "rtpDetails" : {
+            "$ref" : "#/components/schemas/RtpFedNowDetails"
+          },
+          "fedNowDetails" : {
+            "$ref" : "#/components/schemas/RtpFedNowDetails"
+          },
+          "paymentReturnDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PaymentReturnDetails"
+            }
+          },
+          "recurrence" : {
+            "$ref" : "#/components/schemas/RecurrenceDetails"
+          },
+          "positivePayDecision" : {
+            "$ref" : "#/components/schemas/PositivePayDecisionDetails"
+          },
+          "achDetails" : {
+            "$ref" : "#/components/schemas/AchDetails"
+          },
+          "creationDateTime" : {
+            "type" : "string",
+            "description" : "Payment creation date and time are recorded in UTC.",
+            "format" : "date-time",
+            "example" : "2022-06-30T01:30:48.342Z"
+          },
+          "lastUpdatedTime" : {
+            "type" : "string",
+            "description" : "Payment last updated date and time are recorded in UTC.",
+            "format" : "date-time",
+            "example" : "2022-06-30T01:30:48.342Z"
+          },
+          "additionalAttributes" : {
+            "type" : "array",
+            "description" : "This field carries supplementary information required for payment processing. For example, in the case of a waterfall payment, it provides the associated payment batch details.",
+            "example" : [ {
+              "attributeName" : "paymentIndex",
+              "value" : "4"
+            }, {
+              "attributeName" : "paymentCountInBatch",
+              "value" : "16"
+            }, {
+              "attributeName" : "category",
+              "value" : "Waterfall"
+            } ],
+            "items" : {
+              "required" : [ "attributeName", "value" ],
+              "type" : "object",
+              "properties" : {
+                "attributeName" : {
+                  "type" : "string",
+                  "example" : "paymentIndex"
+                },
+                "value" : {
+                  "type" : "string",
+                  "example" : "4"
+                }
+              }
+            }
+          }
+        },
+        "description" : "Payment information"
+      },
+      "ValidationFailureMessages" : {
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Code for the validation failure messages.",
+            "example" : "212454"
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "Reason for the validation failure messages.",
+            "example" : "<reason>"
+          }
+        }
+      },
+      "PaymentReturnDetails" : {
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Code for the payment return details.",
+            "example" : "212454"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description for the payment return details.",
+            "example" : "<description>"
+          },
+          "returnDate" : {
+            "type" : "string",
+            "description" : "Payment return date in yyyy-mm-dd format",
+            "format" : "date",
+            "example" : "2025-11-25"
+          }
+        }
+      },
+      "PaymentNocDetails" : {
+        "properties" : {
+          "nocCode" : {
+            "type" : "string",
+            "description" : "NOC code.",
+            "example" : "212454"
+          },
+          "originalAccountNumber" : {
+            "type" : "string",
+            "description" : "Original Account Number.",
+            "example" : "989898"
+          },
+          "correctedAccountNumber" : {
+            "type" : "string",
+            "description" : "Corrected Account Number.",
+            "example" : "989898"
+          },
+          "originalRoutingNumber" : {
+            "type" : "string",
+            "description" : "Original Routing Number.",
+            "example" : "101206101"
+          },
+          "correctedRoutingNumber" : {
+            "type" : "string",
+            "description" : "Corrected Routing Number.",
+            "example" : "101206101"
+          },
+          "originalTranCode" : {
+            "type" : "string",
+            "description" : "Original Tran Code.",
+            "example" : "101"
+          },
+          "correctedTranCode" : {
+            "type" : "string",
+            "description" : "Corrected Tran Code.",
+            "example" : "101"
+          },
+          "receivedDateTime" : {
+            "type" : "string",
+            "description" : "Received Date Time.",
+            "example" : "2022-06-30T01:30:48.342Z"
+          }
+        }
+      },
+      "RtpFedNowDetails" : {
+        "properties" : {
+          "messageId" : {
+            "type" : "string",
+            "description" : "message Id.",
+            "example" : "101"
+          },
+          "instructionId" : {
+            "type" : "string",
+            "description" : "instruction Id.",
+            "example" : "87878"
+          },
+          "endToEndId" : {
+            "type" : "string",
+            "description" : "end To End Id.",
+            "example" : "32656"
+          },
+          "transactionId" : {
+            "type" : "string",
+            "description" : "transaction Id.",
+            "example" : "99999"
+          }
+        }
+      },
+      "BeneficiaryFIAdviceInformation" : {
+        "properties" : {
+          "adviceCode" : {
+            "type" : "string",
+            "description" : "advice Code.",
+            "example" : "AC8956"
+          },
+          "lines" : {
+            "type" : "string",
+            "description" : "lines.",
+            "example" : "<lines>"
+          }
+        }
+      },
+      "RecurrenceDetails" : {
+        "properties" : {
+          "recurrenceId" : {
+            "type" : "number",
+            "description" : "Recurrence unique id.",
+            "example" : 121
+          },
+          "frequency" : {
+            "type" : "string",
+            "description" : "The payment recurrence frequency options are Daily, Weekly, BiWeekly, Monthly, Quarterly, SemiAnnually, and Yearly.",
+            "example" : "Daily"
+          },
+          "payUntil" : {
+            "type" : "string",
+            "description" : "The recurrence end options are Cancelled, EndDate, or NumberOfPayments.",
+            "example" : "NumberOfPayments"
+          },
+          "endDate" : {
+            "type" : "string",
+            "description" : "End date of the recurrence payments.",
+            "example" : "12-31-2025"
+          },
+          "numberOfPayments" : {
+            "type" : "number",
+            "description" : "Total number of payments in the recurrence series.",
+            "example" : 12
+          },
+          "lastPaymentRefId" : {
+            "type" : "number",
+            "description" : "Most recent payment date in the recurrence series.",
+            "example" : 12
+          },
+          "nextPaymentDate" : {
+            "type" : "string",
+            "description" : "Upcoming scheduled payment date.",
+            "example" : "12-31-2025"
+          }
+        }
+      },
+      "PositivePayDecisionDetails" : {
+        "properties" : {
+          "exceptionId" : {
+            "type" : "string",
+            "description" : "Unique identifier for the exception.",
+            "example" : "2389"
+          },
+          "exceptionReason" : {
+            "type" : "string",
+            "description" : "Reason for the exception that triggered the positive pay decision.",
+            "example" : "Unauthorized originating company"
+          },
+          "exceptionDateTime" : {
+            "type" : "string",
+            "description" : "Date and time when the exception occurred.",
+            "example" : "06-19-2024 12:09:14"
+          },
+          "positivePayDecisionStatus" : {
+            "type" : "string",
+            "description" : "Status of the positive pay decision (e.g., approved, rejected).",
+            "example" : "Approved"
+          },
+          "approvedBy" : {
+            "type" : "string",
+            "description" : "User or system that approved the decision.",
+            "example" : "JaneDoe"
+          },
+          "approvedDate" : {
+            "type" : "string",
+            "description" : "Date when the decision was approved.",
+            "example" : "06-20-2024"
+          },
+          "positivePayRule" : {
+            "type" : "object",
+            "properties" : {
+              "ruleId" : {
+                "type" : "number",
+                "description" : "Unique identifier for the positive pay rule.",
+                "example" : 767
+              },
+              "currency" : {
+                "type" : "string",
+                "description" : "Currency associated with the payment transaction.",
+                "example" : "USD"
+              },
+              "deliveryMethod" : {
+                "type" : "string",
+                "description" : "Method used for delivering the payment (e.g., ACH, wire).",
+                "example" : "ACH"
+              },
+              "customerName" : {
+                "type" : "string",
+                "description" : "Name of the customer initiating the transaction.",
+                "example" : "ABC Corp"
+              },
+              "customerAccountNumber" : {
+                "type" : "string",
+                "description" : "Customer's account number.",
+                "example" : "4234234"
+              },
+              "companyId" : {
+                "type" : "string",
+                "description" : "Company identifier associated with the transaction.",
+                "example" : "221972234"
+              },
+              "beneName" : {
+                "type" : "string",
+                "description" : "Name of the beneficiary receiving the payment.",
+                "example" : "John Doe"
+              },
+              "beneBankId" : {
+                "type" : "string",
+                "description" : "Bank identifier for the beneficiary's bank.",
+                "example" : "45454"
+              },
+              "beneAccountNumber" : {
+                "type" : "string",
+                "description" : "Beneficiary's account number.",
+                "example" : "67567563"
+              },
+              "amount" : {
+                "type" : "number",
+                "description" : "Rule amount.",
+                "example" : 100
+              },
+              "amountType" : {
+                "type" : "string",
+                "description" : "Type of amount, such as Exact or Maximum.",
+                "example" : "Exact"
+              },
+              "frequency" : {
+                "type" : "string",
+                "description" : "Frequency of the transaction (e.g., one-time, Daily, Weekly).",
+                "example" : "Weekly"
+              },
+              "secCode" : {
+                "type" : "string",
+                "description" : "Standard Entry Class (SEC) code for ACH transactions.",
+                "example" : "PPD"
+              },
+              "status" : {
+                "type" : "string",
+                "description" : "Current status of the positive pay rule (e.g., Active, inactive).",
+                "example" : "Active"
+              },
+              "effectiveDate" : {
+                "type" : "string",
+                "description" : "Date when the positive pay rule becomes effective.",
+                "example" : "12-31-2024"
+              },
+              "expiryDate" : {
+                "type" : "string",
+                "description" : "Date when the positive pay rule expires.",
+                "example" : "12-31-2025"
+              }
+            },
+            "description" : "Positive pay rule details that applied to this decision."
+          }
+        }
+      },
+      "AchDetails" : {
+        "type" : "object",
+        "properties" : {
+          "achSecCode" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "ACH SEC Code. Applicable for the ACH payment rail.",
+            "example" : "PPD"
+          },
+          "achTransactionCode" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "ACH transaction code.",
+            "example" : "21"
+          },
+          "achTraceId" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "ACH Trace Id associated with the payment record.",
+            "example" : "202110182222664"
+          },
+          "achBatchId" : {
+            "maxLength" : 11,
+            "type" : "string",
+            "description" : "ACH Batch Id associated with the payment record.",
+            "example" : "12341"
+          },
+          "achOriginationId" : {
+            "type" : "string",
+            "description" : "ACH File Immediate Origination ID.",
+            "example" : "ABC1234"
+          },
+          "originalAchTraceNumber" : {
+            "maxLength" : 15,
+            "type" : "string",
+            "description" : "ACH file original trace number.",
+            "example" : "211272632020401"
+          },
+          "dneAddendaInformation" : {
+            "type" : "object",
+            "properties" : {
+              "individualID" : {
+                "type" : "string"
+              },
+              "dateOfDeath" : {
+                "type" : "string",
+                "format" : "date"
+              },
+              "ssn" : {
+                "type" : "string"
+              },
+              "amount" : {
+                "type" : "string"
+              }
+            },
+            "description" : "DNE (Death Notification) SEC Addenda Payment Related Information"
+          },
+          "enrAddendaInformation" : {
+            "type" : "object",
+            "properties" : {
+              "accountType" : {
+                "type" : "string"
+              },
+              "routingNumber" : {
+                "type" : "string"
+              },
+              "accountNumber" : {
+                "type" : "string"
+              },
+              "ssn" : {
+                "type" : "string"
+              },
+              "accountName" : {
+                "type" : "string"
+              },
+              "reprehensivePayee" : {
+                "type" : "boolean"
+              }
+            },
+            "description" : "ENR (AutoEntroll) SEC Addenda Payment Related Information"
+          }
+        }
+      },
+      "TransactionWebhookRequest" : {
+        "required" : [ "data" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/TransactionWebhookData"
+          }
+        },
+        "description" : "Transaction webhook request containing transaction update data"
+      },
+      "TransactionWebhookData" : {
+        "type" : "object",
+        "properties" : {
+          "transactionId" : {
+            "type" : "integer",
+            "description" : "Transaction unique identifier assigned by the system",
+            "format" : "int32",
+            "example" : 7094
+          },
+          "channel" : {
+            "type" : "string",
+            "description" : "Channel represents the system that originates the transaction",
+            "example" : "API"
+          },
+          "customerName" : {
+            "type" : "string",
+            "description" : "Name of the customer associated with the transaction",
+            "example" : "UPS Customer2"
+          },
+          "virtualAccountNumber" : {
+            "type" : "string",
+            "description" : "Virtual account number associated with the transaction",
+            "example" : "LSB00000003"
+          },
+          "transactionAmount" : {
+            "type" : "string",
+            "description" : "Transaction amount",
+            "example" : "1.00"
+          },
+          "creditDebitType" : {
+            "type" : "string",
+            "description" : "Whether the transaction is CREDIT or DEBIT",
+            "example" : "DEBIT",
+            "enum" : [ "CREDIT", "DEBIT" ]
+          },
+          "transactionDateTime" : {
+            "type" : "string",
+            "description" : "Date and time when the transaction was created",
+            "format" : "date-time",
+            "example" : "2026-02-04T09:38:33Z"
+          },
+          "lastUpdatedTime" : {
+            "type" : "string",
+            "description" : "Date and time when the transaction was last updated",
+            "format" : "date-time",
+            "example" : "2026-02-04T09:38:38Z"
+          },
+          "transactionStatus" : {
+            "type" : "string",
+            "description" : "Transaction status such as SUBMITTED, PROCESSED, etc.",
+            "example" : "PROCESSED"
+          },
+          "externalAccountReference" : {
+            "type" : "string",
+            "description" : "Wallet ID or Token ID associated with the transaction",
+            "example" : "WALLET123"
+          },
+          "transactionDescription" : {
+            "type" : "string",
+            "description" : "Description of the transaction",
+            "example" : "Payment Reference"
+          },
+          "paymentMethod" : {
+            "type" : "string",
+            "description" : "Payment method used such as ACH, RTP, FedNow, Fedwire, Credit Card",
+            "example" : "ACH"
+          },
+          "senderBankId" : {
+            "type" : "string",
+            "description" : "Sender bank routing number",
+            "example" : "086500634"
+          },
+          "senderBankAddress1" : {
+            "type" : "string",
+            "description" : "Sender bank address line 1",
+            "example" : "2100 STEWART DRIVE"
+          },
+          "senderBankAddress2" : {
+            "type" : "string",
+            "description" : "Sender bank address line 2",
+            "nullable" : true
+          },
+          "senderBankCity" : {
+            "type" : "string",
+            "description" : "Sender bank city",
+            "example" : "JEFFERSON CITY"
+          },
+          "senderBankZip" : {
+            "type" : "string",
+            "description" : "Sender bank zip code",
+            "example" : "65109"
+          },
+          "senderBankCountry" : {
+            "type" : "string",
+            "description" : "Sender bank country",
+            "example" : "UNITED STATES OF AMERICA"
+          },
+          "receiverBankId" : {
+            "type" : "string",
+            "description" : "Receiver bank routing number",
+            "example" : "073913580"
+          },
+          "receiverBankAddress1" : {
+            "type" : "string",
+            "description" : "Receiver bank address line 1",
+            "example" : "111 My Street"
+          },
+          "receiverBankAddress2" : {
+            "type" : "string",
+            "description" : "Receiver bank address line 2",
+            "nullable" : true,
+            "example" : "Suite 210"
+          },
+          "receiverBankCity" : {
+            "type" : "string",
+            "description" : "Receiver bank city",
+            "example" : "Charlotte"
+          },
+          "receiverBankZip" : {
+            "type" : "string",
+            "description" : "Receiver bank zip code",
+            "example" : "28269"
+          },
+          "receiverBankCountry" : {
+            "type" : "string",
+            "description" : "Receiver bank country",
+            "example" : "UNITED STATES OF AMERICA"
+          }
+        },
+        "description" : "Transaction webhook data containing transaction update information"
+      }
+    }
+  }
+}
