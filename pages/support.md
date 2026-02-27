@@ -1,3 +1,7 @@
+---
+slug: /support
+---
+
 # Support
 
 Need help with Finzly Connect integration?

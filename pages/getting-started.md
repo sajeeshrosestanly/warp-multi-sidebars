@@ -1,3 +1,7 @@
+---
+slug: /getting-started
+---
+
 # Getting Started
 
 Welcome to the **Finzly API Developer Portal**.
@@ -6,7 +10,7 @@ This page is a placeholder onboarding guide for the next version of Finzly devel
 
 ## 1. Request sandbox access
 
-- Reach out through the [Support](support.md) page to request credentials.
+- Reach out through the [Support](/support) page to request credentials.
 - Include your company name, intended use case, and contact email.
 
 ## 2. Generate an access token
@@ -41,8 +45,8 @@ curl -X POST https://sandbox.api.finzly.io/payments \
 
 ## 4. Explore API Docs
 
-- Open [API Docs](apis/index.yaml) for request/response schemas.
-- Review [Changelog](changelog.md) for upcoming and released changes.
+- Open [API Docs](/apis) for request/response schemas.
+- Review [Changelog](/changelog) for upcoming and released changes.
 
 ## 5. Next steps
 

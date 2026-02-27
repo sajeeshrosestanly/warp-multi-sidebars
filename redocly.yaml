@@ -10,13 +10,13 @@ seo:
   description: Developer resources for Finzly Connect APIs including getting started guides, API documentation, changelog, and support.
 navbar:
   items:
-    - page: getting-started.md
+    - page: pages/getting-started.md
       label: Getting Started
     - page: apis/index.yaml
       label: API Docs
-    - page: changelog.md
+    - page: pages/changelog.md
       label: Changelog
-    - page: support.md
+    - page: pages/support.md
       label: Support
     - href: https://finzly.com/
       label: Finzly.com

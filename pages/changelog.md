@@ -1,3 +1,7 @@
+---
+slug: /changelog
+---
+
 # Changelog
 
 All notable updates to the Finzly API Developer Portal are documented here.
