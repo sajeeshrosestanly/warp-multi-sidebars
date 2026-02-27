@@ -1,4 +1,5 @@
 @import './navbar.css';
+@import './api-docs.css';
 
 /* Learn more about Realm styles: https://redocly.com/docs/realm/style/concepts/styling */
 :root {
@@ -76,4 +77,15 @@ div[data-component-name='Layout/PageLayout'] {
 .menu-content a[aria-current='page'] {
   color: #8ecbff;
   font-weight: 600;
+}
+
+/* Hide "Last updated" metadata globally */
+[data-component-name*='LastUpdated'],
+[class*='LastUpdated'],
+[class*='lastUpdated'],
+[data-testid*='last-updated'],
+[data-testid*='lastUpdated'],
+article > p:has(time),
+article > div:has(time) {
+  display: none !important;
 }

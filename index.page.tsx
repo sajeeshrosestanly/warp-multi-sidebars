@@ -22,7 +22,7 @@ export default function HomePage() {
             <h4>Getting Started</h4>
             <p>Set up credentials, authenticate, and make your first API call in minutes.</p>
           </Card>
-          <Card href="/apis/index.yaml">
+          <Card href="/api-docs">
             <h4>API Docs</h4>
             <p>Explore Payment APIs and Customer APIs with schemas and example payloads.</p>
           </Card>

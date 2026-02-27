@@ -45,7 +45,8 @@ curl -X POST https://sandbox.api.finzly.io/payments \
 
 ## 4. Explore API Docs
 
-- Open [API Docs](/apis) for request/response schemas.
+- Open [API Docs](/api-docs) for domain-level discovery and integration pathways.
+- Open [Full API Reference](/apis) for request/response schemas.
 - Review [Changelog](/changelog) for upcoming and released changes.
 
 ## 5. Next steps

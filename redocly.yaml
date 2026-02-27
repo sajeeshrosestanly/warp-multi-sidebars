@@ -12,7 +12,7 @@ navbar:
   items:
     - page: pages/getting-started.md
       label: Getting Started
-    - page: apis/index.yaml
+    - page: pages/api-docs.md
       label: API Docs
     - page: pages/changelog.md
       label: Changelog
