@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: Customer Role API
+  description: Customer role management APIs extracted from the customer domain specification.
+  version: 2.5.1
+servers:
+  - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: FinzlyConnect Customer APIs
+security:
+  - oAuth2:
+      - roles
+tags:
+  - name: Customer Role
+    description: APIs for customer role management.
+x-tagGroups:
+  - name: Customer Role APIs
+    tags:
+      - Customer Role
+
+paths:
+  /api/user-management/v1/customers/{customerId}/roles/{roleId}:
+    get:
+      tags: [Customer Role]
+      summary: Get customer role.
+      operationId: get-role
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: number }
+        - name: roleId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomerRoleResponse'
+  /api/user-management/v1/customers/{customerId}/roles/search:
+    get:
+      tags: [Customer Role]
+      summary: Search customer role.
+      operationId: search-role
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCustomerRoleResponse'
+  /api/user-management/v1/customers/{customerId}/roles:
+    post:
+      tags: [Customer Role]
+      summary: Create new customer role.
+      operationId: save-role
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRoleCreateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerRoleResponse'
+
+components:
+  schemas:
+    GetCustomerRoleResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/GetCustomerRoleResponse
+    SearchCustomerRoleResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/SearchCustomerRoleResponse
+    CustomerRoleCreateRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/CustomerRoleCreateRequest
+    CustomerRoleResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/CustomerRoleResponse
+  securitySchemes:
+    oAuth2:
+      $ref: ./customer-openapi.yaml#/components/securitySchemes/oAuth2

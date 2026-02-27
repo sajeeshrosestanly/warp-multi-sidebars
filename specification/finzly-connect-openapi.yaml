@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Finzly Connect API
-  description: Aggregated entrypoint that references payment and customer API specs.
+  description: Aggregated entrypoint that references payment, FX, and customer API specs.
   version: 6.2.2.0
   contact:
     name: Finzly Developer Support
@@ -18,24 +18,65 @@ security:
 tags:
   - name: Payments
     description: APIs for creating, managing, and tracking individual payments.
+  - name: Transfer
+    description: APIs for internal transfers and waterfall transfer operations.
   - name: Bulk Payment
     description: APIs for bulk payment file upload and related operations.
   - name: Positive Pay
     description: APIs for positive pay exception review and decisioning.
+  - name: Payment Webhook Notifications.
+    description: Webhook notifications for payment status updates.
+  - name: Ledger Transaction Webhook
+    description: Webhook notifications for ledger transaction status updates.
+  - name: Virtual Account
+    description: APIs for virtual account creation, management, and transaction search.
   - name: Bank
     description: APIs to retrieve and search bank information.
-  - name: Customer APIs
-    description: APIs for customer creation and retrieval.
+  - name: Foreign Exchange
+    description: APIs for FX quote, acceptance, rejection, trade, cover, and cancellation.
+  - name: Customer
+    description: APIs for customer onboarding, search, retrieval, and updates.
+  - name: Customer Account
+    description: APIs for customer account operations.
+  - name: Customer Account - V3
+    description: APIs for customer account operations (v3).
+  - name: Customer Contact
+    description: APIs for customer beneficiary/contact operations.
+  - name: Customer User
+    description: APIs for customer user management.
+  - name: Customer Role
+    description: APIs for customer role management.
+  - name: Customer Lookup
+    description: APIs for customer lookup by account details.
 x-tagGroups:
   - name: Payment APIs
     tags:
       - Payments
+      - Transfer
       - Bulk Payment
       - Positive Pay
-      - Bank
   - name: Customer APIs
     tags:
-      - Customer APIs
+      - Customer
+      - Customer Account
+      - Customer Account - V3
+      - Customer Contact
+      - Customer User
+      - Customer Role
+      - Customer Lookup
+  - name: FX APIs
+    tags:
+      - Foreign Exchange
+  - name: Webhook APIs
+    tags:
+      - Payment Webhook Notifications.
+      - Ledger Transaction Webhook
+  - name: Bank APIs
+    tags:
+      - Bank      
+  - name: Finzly Core APIs
+    tags:
+      - Virtual Account      
 
 paths:
   /v1/payments/customers/{customerUID}/files/{fileType}:
@@ -74,19 +115,95 @@ paths:
     $ref: ./payment-api/payments-openapi.yaml#/paths/~1v3~1payments~1{paymentUID}~1reverse
   /api/gateway/v1/payments/waterfall:
     $ref: ./payment-api/transfer-openapi.yaml#/paths/~1api~1gateway~1v1~1payments~1waterfall
-  /customers:
-    $ref: ./customer-api/openapi.yaml#/paths/~1customers
-  /customers/{customerId}:
-    $ref: ./customer-api/openapi.yaml#/paths/~1customers~1{customerId}
+  /payments:
+    $ref: ./webhook-api/payments-webhook-openapi.yaml#/paths/~1payments
+  /transaction/webhook:
+    $ref: ./webhook-api/payments-webhook-openapi.yaml#/paths/~1transaction~1webhook
+  /v2/{customerUID}/virtual-accounts:
+    $ref: ./finzlycore-api/deposit-accounts-openapi.yaml#/paths/~1v2~1{customerUID}~1virtual-accounts
+  /v2/{customerUID}/virtual-accounts/{accountNumber}:
+    $ref: ./finzlycore-api/deposit-accounts-openapi.yaml#/paths/~1v2~1{customerUID}~1virtual-accounts~1{accountNumber}
+  /v2/virtual-accounts/search:
+    $ref: ./finzlycore-api/deposit-accounts-openapi.yaml#/paths/~1v2~1virtual-accounts~1search
+  /v2/virtual-accounts/transactions/search:
+    $ref: ./finzlycore-api/deposit-accounts-openapi.yaml#/paths/~1v2~1virtual-accounts~1transactions~1search
+  /v2/fx/quote:
+    $ref: ./fx-api/fx-openapi.yaml#/paths/~1v2~1fx~1quote
+  /v2/fx/accept:
+    $ref: ./fx-api/fx-openapi.yaml#/paths/~1v2~1fx~1accept
+  /v2/fx/{quoteUUID}/reject:
+    $ref: ./fx-api/fx-openapi.yaml#/paths/~1v2~1fx~1{quoteUUID}~1reject
+  /v2/fx/{forexContractNo}:
+    $ref: ./fx-api/fx-openapi.yaml#/paths/~1v2~1fx~1{forexContractNo}
+  /v2/fx/{forexContractNo}/cover:
+    $ref: ./fx-api/fx-openapi.yaml#/paths/~1v2~1fx~1{forexContractNo}~1cover
+  /v2/fx/{forexContractNo}/cancel:
+    $ref: ./fx-api/fx-openapi.yaml#/paths/~1v2~1fx~1{forexContractNo}~1cancel
+  /v2/customers:
+    $ref: ./customer-api/customer-openapi.yaml#/paths/~1v2~1customers
+  /v2/customers/{customerUID}:
+    $ref: ./customer-api/customer-openapi.yaml#/paths/~1v2~1customers~1{customerUID}
+  /v1/customers/{customerUID}/fees:
+    $ref: ./customer-api/customer-openapi.yaml#/paths/~1v1~1customers~1{customerUID}~1fees
+  /v1/customers/{customerUID}/fees/{feeId}:
+    $ref: ./customer-api/customer-openapi.yaml#/paths/~1v1~1customers~1{customerUID}~1fees~1{feeId}
+  /v2/customers/{customerUID}/accounts:
+    $ref: ./customer-api/customer-account-openapi.yaml#/paths/~1v2~1customers~1{customerUID}~1accounts
+  /v2/customers/{customerUID}/accounts/{accountUID}:
+    $ref: ./customer-api/customer-account-openapi.yaml#/paths/~1v2~1customers~1{customerUID}~1accounts~1{accountUID}
+  /v3/customers/{customerUID}/accounts/{accountUID}:
+    $ref: ./customer-api/customer-account-openapi.yaml#/paths/~1v3~1customers~1{customerUID}~1accounts~1{accountUID}
+  /v3/customers/{customerUID}/accounts:
+    $ref: ./customer-api/customer-account-openapi.yaml#/paths/~1v3~1customers~1{customerUID}~1accounts
+  /v3/customers/{customerUID}/accounts/search:
+    $ref: ./customer-api/customer-account-openapi.yaml#/paths/~1v3~1customers~1{customerUID}~1accounts~1search
+  /v1/customers/{customerUID}/accounts/{accountUID}/sweeps/{direction}:
+    $ref: ./customer-api/customer-account-openapi.yaml#/paths/~1v1~1customers~1{customerUID}~1accounts~1{accountUID}~1sweeps~1{direction}
+  /v1/customers/{customerId}/beneficiary:
+    $ref: ./customer-api/customer-contact-openapi.yaml#/paths/~1v1~1customers~1{customerId}~1beneficiary
+  /v1/customers/{customerId}/beneficiary/{contactId}:
+    $ref: ./customer-api/customer-contact-openapi.yaml#/paths/~1v1~1customers~1{customerId}~1beneficiary~1{contactId}
+  /v2/customers/{customerUID}/contacts:
+    $ref: ./customer-api/customer-contact-openapi.yaml#/paths/~1v2~1customers~1{customerUID}~1contacts
+  /v2/customers/{customerUID}/contacts/{contactUID}:
+    $ref: ./customer-api/customer-contact-openapi.yaml#/paths/~1v2~1customers~1{customerUID}~1contacts~1{contactUID}
+  /api/user-management/v1/customers/{customerId}/users:
+    $ref: ./customer-api/customer-user-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1users
+  /api/user-management/v1/customers/{customerId}/users/{userId}:
+    $ref: ./customer-api/customer-user-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1users~1{userId}
+  /api/user-management/v1/customers/{customerId}/users/{userId}/suspend:
+    $ref: ./customer-api/customer-user-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1users~1{userId}~1suspend
+  /api/user-management/v1/customers/{customerId}/users/{userId}/activate:
+    $ref: ./customer-api/customer-user-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1users~1{userId}~1activate
+  /api/user-management/v1/customers/{customerId}/users/search:
+    $ref: ./customer-api/customer-user-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1users~1search
+  /api/user-management/v1/customers/{customerId}/roles/{roleId}:
+    $ref: ./customer-api/customer-role-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1roles~1{roleId}
+  /api/user-management/v1/customers/{customerId}/roles/search:
+    $ref: ./customer-api/customer-role-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1roles~1search
+  /api/user-management/v1/customers/{customerId}/roles:
+    $ref: ./customer-api/customer-role-openapi.yaml#/paths/~1api~1user-management~1v1~1customers~1{customerId}~1roles
+  /v1/customers/{customerId}/limits:
+    $ref: ./customer-api/customer-openapi.yaml#/paths/~1v1~1customers~1{customerId}~1limits
+  /v1/customers/lookup/{accountNumber}:
+    $ref: ./customer-api/customer-openapi.yaml#/paths/~1v1~1customers~1lookup~1{accountNumber}
 
 components:
   schemas:
     CreateCustomerRequest:
-      $ref: ./customer-api/openapi.yaml#/components/schemas/CreateCustomerRequest
-    Customer:
-      $ref: ./customer-api/openapi.yaml#/components/schemas/Customer
+      $ref: ./customer-api/customer-openapi.yaml#/components/schemas/CreateCustomerRequest
+    UpdateCustomerRequest:
+      $ref: ./customer-api/customer-openapi.yaml#/components/schemas/UpdateCustomerRequest
+    CreateUpdateCustomerResponse:
+      $ref: ./customer-api/customer-openapi.yaml#/components/schemas/CreateUpdateCustomerResponse
+    UpdateCustomersResponse:
+      $ref: ./customer-api/customer-openapi.yaml#/components/schemas/UpdateCustomersResponse
+    SearchCustomersResponse:
+      $ref: ./customer-api/customer-openapi.yaml#/components/schemas/SearchCustomersResponse
+    GetCustomersResponse:
+      $ref: ./customer-api/customer-openapi.yaml#/components/schemas/GetCustomersResponse
   securitySchemes:
     oAuth2:
       $ref: ./payment-api/payments-openapi.yaml#/components/securitySchemes/oAuth2
     bearerAuth:
-      $ref: ./customer-api/openapi.yaml#/components/securitySchemes/bearerAuth
+      $ref: ./customer-api/customer-openapi.yaml#/components/securitySchemes/bearerAuth

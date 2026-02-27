@@ -36,6 +36,9 @@ tags:
       7. Reverse a Payment
 
       8. Transfer (Book) Payment
+  - name: Credit
+    description: Credit payment operations within the Payments API.
+    x-traitTag: true
 x-tagGroups:
   - name: Payment Rails
     tags:
@@ -93,6 +96,7 @@ paths:
     post:
       tags:
         - Payments
+        - Credit
       summary: Initiate a Credit Payment - v3
       description: >
         Initiate a domestic or international credit payment [one time or
@@ -147,6 +151,7 @@ paths:
     post:
       tags:
         - Payments
+        - Credit
       summary: Initiate a Credit Payment - v4
       description: >
         Initiate a domestic or international credit payment (on-time or
@@ -212,6 +217,7 @@ paths:
     post:
       tags:
         - Payments
+        - Credit
       summary: Initiate a Credit Payment - v5
       description: >
         The /v5/payments/credit endpoint was introduced with relaxed validation

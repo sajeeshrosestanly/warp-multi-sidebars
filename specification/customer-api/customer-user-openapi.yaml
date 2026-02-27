@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: Customer User API
+  description: Customer user management APIs extracted from the customer domain specification.
+  version: 2.5.1
+servers:
+  - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: FinzlyConnect Customer APIs
+security:
+  - oAuth2:
+      - roles
+tags:
+  - name: Customer User
+    description: APIs for customer user management.
+x-tagGroups:
+  - name: Customer User APIs
+    tags:
+      - Customer User
+
+paths:
+  /api/user-management/v1/customers/{customerId}/users:
+    post:
+      tags: [Customer User]
+      summary: Create new customer user.
+      operationId: save
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUserCreateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerUserResponse'
+  /api/user-management/v1/customers/{customerId}/users/{userId}:
+    put:
+      tags: [Customer User]
+      summary: Update existing customer user.
+      operationId: update
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: userId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUserUpdateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomerUserResponse'
+  /api/user-management/v1/customers/{customerId}/users/{userId}/suspend:
+    patch:
+      tags: [Customer User]
+      summary: Suspend customer user.
+      operationId: suspend-user
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: userId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+  /api/user-management/v1/customers/{customerId}/users/{userId}/activate:
+    patch:
+      tags: [Customer User]
+      summary: Activate customer user.
+      operationId: activate-user
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: userId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+  /api/user-management/v1/customers/{customerId}/users/search:
+    post:
+      tags: [Customer User]
+      summary: Search customer user.
+      operationId: search-user
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCustomerUserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCustomerUserResponse'
+
+components:
+  schemas:
+    CustomerUserCreateRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/CustomerUserCreateRequest
+    CustomerUserResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/CustomerUserResponse
+    CustomerUserUpdateRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/CustomerUserUpdateRequest
+    UpdateCustomerUserResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/UpdateCustomerUserResponse
+    SearchCustomerUserRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/SearchCustomerUserRequest
+    SearchCustomerUserResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/SearchCustomerUserResponse
+  securitySchemes:
+    oAuth2:
+      $ref: ./customer-openapi.yaml#/components/securitySchemes/oAuth2

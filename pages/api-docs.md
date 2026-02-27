@@ -16,6 +16,7 @@ slug: /api-docs
         <span class="api-proof-item" role="listitem">JSON and ISO 20022 payloads</span>
         <span class="api-proof-item" role="listitem">HMAC webhook signatures</span>
         <a class="api-fullspec-link" href="/specification/finzly-connect-openapi" aria-label="View full OpenAPI spec">
+          <span class="api-fullspec-icon" aria-hidden="true">API</span>
           <span class="api-fullspec-label">View full spec</span>          
         </a>
       </div>
@@ -46,7 +47,6 @@ slug: /api-docs
       <p class="api-section-subtitle">Select a capability to explore request patterns and payload structure.</p>
       <div class="subapi-grid">
         <a class="subapi-card" href="/specification/payment-api/payments-openapi">
-          <span class="subapi-icon">RA</span>
           <span class="subapi-text">
             <strong>Payment Rails</strong>
             <small>Explore payment rails for orchestration and settlement.</small>
@@ -62,22 +62,18 @@ slug: /api-docs
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
         <a class="subapi-card" href="/specification/payment-api/bulk-payments-openapi">
-          <span class="subapi-icon">BK</span>
           <span class="subapi-text"><strong>Bulk Payment API</strong><small>Send payroll and vendor batches in a single API request.</small><span class="card-meta"><span>Batch</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
         <a class="subapi-card" href="/specification/payment-api/positive-pay-openapi">
-          <span class="subapi-icon">PP</span>
           <span class="subapi-text"><strong>Positive Pay API</strong><small>Validate issued checks and payment items before posting.</small><span class="card-meta"><span>Fraud control</span><span>Validation</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">RP</span>
+        <a class="subapi-card" href="/specification/finzly-connect-openapi/payments/createdebitpayment">
           <span class="subapi-text"><strong>Request for Pay API</strong><small>Create and track request-for-pay flows with payer response states.</small><span class="card-meta"><span>Collections</span><span>Status</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">BT</span>
+        <a class="subapi-card" href="/specification/payment-api/transfer-openapi">
           <span class="subapi-text"><strong>Book Transfer API</strong><small>Move funds between internal accounts with real-time balance updates.</small><span class="card-meta"><span>Internal ledger</span><span>Real-time</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
@@ -88,18 +84,15 @@ slug: /api-docs
       <h2><span class="section-title">FX API</span><span class="section-kicker">Foreign Exchange</span></h2>
       <p class="api-section-subtitle">Explore pricing, booking, and settlement services for FX workflows.</p>
       <div class="subapi-grid">
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">FQ</span>
+        <a class="subapi-card" href="/specification/fx-api/fx-openapi">
           <span class="subapi-text"><strong>FX Quote API</strong><small>Get indicative and executable rates for supported currency pairs.</small><span class="card-meta"><span>Pricing</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">RL</span>
+        <a class="subapi-card" href="/specification/fx-api/fx-openapi">
           <span class="subapi-text"><strong>Rate Lock API</strong><small>Lock rates for a validity window and manage expiration behavior.</small><span class="card-meta"><span>Hedging</span><span>Timed</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">TB</span>
+        <a class="subapi-card" href="/specification/fx-api/fx-openapi">
           <span class="subapi-text"><strong>Trade Booking API</strong><small>Create and track FX trade execution and settlement readiness.</small><span class="card-meta"><span>Execution</span><span>Settlement</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
@@ -110,63 +103,63 @@ slug: /api-docs
       <h2><span class="section-title">Customer API</span><span class="section-kicker">Customer lifecycle</span></h2>
       <p class="api-section-subtitle">Manage customer lifecycle data required for payment and compliance flows.</p>
       <div class="subapi-grid">
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">CO</span>
-          <span class="subapi-text"><strong>Customer Onboarding API</strong><small>Create and validate business or individual customer profiles.</small><span class="card-meta"><span>KYC ready</span></span></span>
+        <a class="subapi-card" href="/specification/customer-api/customer-openapi">
+          <span class="subapi-text"><strong>Customer Core API</strong><small>Create, update, search, and retrieve customer profiles.</small><span class="card-meta"><span>Lifecycle</span><span>Profiles</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">KC</span>
-          <span class="subapi-text"><strong>KYC / KYB API</strong><small>Retrieve compliance verification states and decision outcomes.</small><span class="card-meta"><span>Compliance</span><span>Risk</span></span></span>
+        <a class="subapi-card" href="/specification/customer-api/customer-account-openapi">
+          <span class="subapi-text"><strong>Customer Account API</strong><small>Manage customer accounts, account updates, and sweeps configuration.</small><span class="card-meta"><span>Accounts</span><span>Sweeps</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">BF</span>
-          <span class="subapi-text"><strong>Beneficiary API</strong><small>Store and manage payee and beneficiary details for transaction use.</small><span class="card-meta"><span>Directory</span><span>Validation</span></span></span>
+        <a class="subapi-card" href="/specification/customer-api/customer-contact-openapi">
+          <span class="subapi-text"><strong>Customer Contact API</strong><small>Create, update, and retrieve beneficiary/contact records.</small><span class="card-meta"><span>Beneficiaries</span><span>Directory</span></span></span>
+          <span class="card-arrow" aria-hidden="true">-></span>
+        </a>
+        <a class="subapi-card" href="/specification/customer-api/customer-user-openapi">
+          <span class="subapi-text"><strong>Customer User API</strong><small>Provision users, update profiles, and manage user activation status.</small><span class="card-meta"><span>Access</span><span>Users</span></span></span>
+          <span class="card-arrow" aria-hidden="true">-></span>
+        </a>
+        <a class="subapi-card" href="/specification/customer-api/customer-role-openapi">
+          <span class="subapi-text"><strong>Customer Role API</strong><small>Create roles and retrieve role assignments for customer entitlements.</small><span class="card-meta"><span>Authorization</span><span>Roles</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
       </div>
     </section>
 
+    
+
     <section class="api-section webhook-domain" id="webhook-api">
       <h2><span class="section-title">Webhook API</span><span class="section-kicker">Eventing</span></h2>
-      <p class="api-section-subtitle">Build event-driven integrations with reliable delivery and verification.</p>
+      <p class="api-section-subtitle">Consume payment and ledger transaction webhook events for real-time status updates.</p>
       <div class="subapi-grid">
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">WS</span>
-          <span class="subapi-text"><strong>Subscription API</strong><small>Create and update subscriptions for events by product domain.</small><span class="card-meta"><span>Event routing</span></span></span>
+        <a class="subapi-card" href="/specification/webhook-api/payments-webhook-openapi/payment-webhook-notifications./notifypaymentstatus">
+          <span class="subapi-text"><strong>Payment Webhook Notifications</strong><small>Receive payment status events such as processed, cancelled, and hold transitions.</small><span class="card-meta"><span>/payments</span><span>POST</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">SV</span>
-          <span class="subapi-text"><strong>Signature Verification</strong><small>Verify payload authenticity using signing keys and headers.</small><span class="card-meta"><span>Security</span><span>HMAC</span></span></span>
-          <span class="card-arrow" aria-hidden="true">-></span>
-        </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">RD</span>
-          <span class="subapi-text"><strong>Retry and Delivery API</strong><small>Inspect retries, dead letters, and delivery attempt history.</small><span class="card-meta"><span>Reliability</span><span>Observability</span></span></span>
+        <a class="subapi-card" href="/specification/webhook-api/payments-webhook-openapi/ledger-transaction-webhook/handletransactionupdate">
+          <span class="subapi-text"><strong>Ledger Transaction Webhook</strong><small>Receive transaction update events when ledger transactions move across statuses.</small><span class="card-meta"><span>/transaction/webhook</span><span>POST</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
       </div>
     </section>
 
     <section class="api-section bank-domain" id="bank-api">
-      <h2><span class="section-title">Bank API</span><span class="section-kicker">Core banking</span></h2>
-      <p class="api-section-subtitle">Access account data, balances, and transaction operations for banking workflows.</p>
+      <h2><span class="section-title">Bank API</span><span class="section-kicker">Bank Lookups</span></h2>
+      <p class="api-section-subtitle">Resolve routing details and institution metadata for domestic and international payment workflows.</p>
       <div class="subapi-grid">
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">AC</span>
-          <span class="subapi-text"><strong>Accounts API</strong><small>Create and manage account profiles and account-level settings.</small><span class="card-meta"><span>Account data</span></span></span>
+        <a class="subapi-card" href="/specification/payment-api/banks-openapi">
+          <span class="subapi-text"><strong>Bank Lookup API</strong><small>Fetch bank details by full routing number.</small><span class="card-meta"><span>Routing</span><span>Lookup</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">BL</span>
-          <span class="subapi-text"><strong>Balance API</strong><small>Retrieve available and ledger balances across supported accounts.</small><span class="card-meta"><span>Balances</span></span></span>
-          <span class="card-arrow" aria-hidden="true">-></span>
-        </a>
-        <a class="subapi-card" href="/specification/finzly-connect-openapi">
-          <span class="subapi-icon">TX</span>
-          <span class="subapi-text"><strong>Transactions API</strong><small>Fetch posted and pending transactions with rich filter support.</small><span class="card-meta"><span>History</span></span></span>
+      </div>
+    </section>
+
+    <section class="api-section finzlycore-domain" id="finzlycore-api">
+      <h2><span class="section-title">Finzly Core API</span><span class="section-kicker">Core Banking</span></h2>
+      <p class="api-section-subtitle">Manage virtual deposit accounts and account transaction search workflows.</p>
+      <div class="subapi-grid">
+        <a class="subapi-card" href="/specification/finzlycore-api/deposit-accounts-openapi">
+          <span class="subapi-text"><strong>Deposit Accounts API</strong><small>Create, update, close, and search virtual accounts with transaction history support.</small><span class="card-meta"><span>Virtual Accounts</span><span>Transactions</span></span></span>
           <span class="card-arrow" aria-hidden="true">-></span>
         </a>
       </div>

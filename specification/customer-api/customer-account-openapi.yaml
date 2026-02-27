@@ -1,0 +1,380 @@
+openapi: 3.1.0
+info:
+  title: Customer Account API
+  description: Customer account APIs extracted from the customer domain specification.
+  version: 2.5.1
+servers:
+  - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: FinzlyConnect Customer APIs
+security:
+  - oAuth2:
+      - roles
+tags:
+  - name: Customer Account
+    description: APIs for customer account operations.
+  - name: Customer Account - V3
+    description: APIs for customer account operations (v3).
+  - name: Customer Account Sweeps
+    description: APIs for customer account sweep configuration operations.
+x-tagGroups:
+  - name: Customer Account APIs
+    tags:
+      - Customer Account
+      - Customer Account - V3
+      - Customer Account Sweeps
+
+paths:
+  /v2/customers/{customerUID}/accounts:
+    get:
+      tags: [Customer Account]
+      summary: Search Customer Accounts
+      operationId: searchCustomerAccounts
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAccountResponse'
+    post:
+      tags: [Customer Account]
+      summary: Create customer account
+      operationId: createCustomerAccount
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountResponse'
+  /v2/customers/{customerUID}/accounts/{accountUID}:
+    get:
+      tags: [Customer Account]
+      summary: Get customer account
+      operationId: getCustomerAccountByAccountUID
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountResponse'
+    put:
+      tags: [Customer Account]
+      summary: Update customer account
+      operationId: updateCustomerAccountByAccountUID
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountResponse'
+    delete:
+      tags: [Customer Account]
+      summary: Delete customer account
+      operationId: deleteCustomerAccountByAccountUID
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountResponse'
+    patch:
+      tags: [Customer Account]
+      summary: Update customer account status
+      operationId: updatestatusbyid
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+  /v3/customers/{customerUID}/accounts/{accountUID}:
+    get:
+      tags: [Customer Account - V3]
+      summary: Get customer account
+      operationId: getCustomerAccountByAccountUIDV3
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/V3GetAccountResponse'
+    patch:
+      tags: [Customer Account - V3]
+      summary: Update customer account
+      operationId: updateCustomerAccountV3
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: integer }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V3UpdateAccountRequest'
+      responses:
+        '200':
+          description: OK
+  /v3/customers/{customerUID}/accounts:
+    post:
+      tags: [Customer Account - V3]
+      summary: Create customer account
+      operationId: createCustomerAccountV3
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V3CreateAccountRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V3CreateAccountResponse'
+  /v3/customers/{customerUID}/accounts/search:
+    post:
+      tags: [Customer Account - V3]
+      summary: Search Customer Accounts
+      operationId: searchCustomerAccountsV3
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V3SearchAccountRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V3SearchAccountResponse'
+  /v1/customers/{customerUID}/accounts/{accountUID}/sweeps/{direction}:
+    get:
+      tags: [Customer Account Sweeps]
+      summary: Fetch sweep details
+      operationId: getCustomerAccountSweeps
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: direction
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [in, out, both]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountSweepsResponse'
+    post:
+      tags: [Customer Account Sweeps]
+      summary: Create customer account sweep
+      operationId: createCustomerAccountSweep
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: direction
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [in, out, both]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountSweepsRequest'
+      responses:
+        '201':
+          description: Created
+    delete:
+      tags: [Customer Account Sweeps]
+      summary: Delete customer account sweeps
+      operationId: deleteCustomerAccountSweeps
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: direction
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [in, out, both]
+      responses:
+        '204':
+          description: No Content
+    patch:
+      tags: [Customer Account Sweeps]
+      summary: Update customer account sweep
+      operationId: updateCustomerAccountSweep
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: accountUID
+          in: path
+          required: true
+          schema: { type: number }
+        - name: direction
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [in, out, both]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountSweepsRequest'
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    SearchAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/SearchAccountResponse
+    CreateAccountRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/CreateAccountRequest
+    CreateAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/CreateAccountResponse
+    GetAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/GetAccountResponse
+    UpdateAccountRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/UpdateAccountRequest
+    UpdateAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/UpdateAccountResponse
+    V3GetAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/V3GetAccountResponse
+    V3UpdateAccountRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/V3UpdateAccountRequest
+    V3CreateAccountRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/V3CreateAccountRequest
+    V3CreateAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/V3CreateAccountResponse
+    V3SearchAccountRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/V3SearchAccountRequest
+    V3SearchAccountResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/V3SearchAccountResponse
+    CreateAccountSweepsRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/CreateAccountSweepsRequest
+    UpdateAccountSweepsRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/UpdateAccountSweepsRequest
+    GetAccountSweepsResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/GetAccountSweepsResponse
+  securitySchemes:
+    oAuth2:
+      $ref: ./customer-openapi.yaml#/components/securitySchemes/oAuth2

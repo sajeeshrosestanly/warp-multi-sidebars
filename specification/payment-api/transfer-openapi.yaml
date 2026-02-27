@@ -9,13 +9,13 @@ security:
   - oAuth2:
       - roles
 tags:
-  - name: Payments
+  - name: Transfer
     description: APIs for transfer and waterfall payment operations.
 paths:
   /v3/payments/booktransfer:
     post:
       tags:
-        - Payments
+        - Transfer
       summary: Initiate a Book (Transfer) Payment
       description: Initiate a transfer payment request
       operationId: booktransfer
@@ -62,7 +62,7 @@ paths:
   /api/gateway/v1/payments/waterfall:
     post:
       tags:
-        - Payments
+        - Transfer
       summary: Waterfall transfers
       description: >
         Initiates a batch of internal fund transfers arranged in a waterfall
