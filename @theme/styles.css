@@ -1,5 +1,6 @@
 @import './navbar.css';
 @import './api-docs.css';
+@import './getting-started.css';
 
 /* Learn more about Realm styles: https://redocly.com/docs/realm/style/concepts/styling */
 :root {

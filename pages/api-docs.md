@@ -40,24 +40,6 @@ slug: /api-docs
     <a class="api-filter-chip" href="#finzlycore-api">Core</a>
   </div>
 
-  <div class="api-quickstart">
-    <p class="api-quickstart-title">Launch your first integration in 5 minutes</p>
-    <div class="api-quickstart-steps">
-      <a class="quickstart-step" href="/getting-started">
-        <span class="quickstart-index">1</span>
-        <span class="quickstart-copy"><strong>Get your sandbox key</strong><small>Create credentials and set your auth headers.</small></span>
-      </a>
-      <a class="quickstart-step" href="/specification/finzly-connect-openapi">
-        <span class="quickstart-index">2</span>
-        <span class="quickstart-copy"><strong>Make your first API call</strong><small>Send a payment or FX quote request with sample payloads.</small></span>
-      </a>
-      <a class="quickstart-step" href="/specification/finzly-connect-openapi">
-        <span class="quickstart-index">3</span>
-        <span class="quickstart-copy"><strong>Enable webhook events</strong><small>Receive delivery notifications with signature verification.</small></span>
-      </a>
-    </div>
-  </div>
-
   <div class="api-sections api-sections-narrow">
     <section class="api-section payment-domain" id="payment-api">
       <h2><span class="section-title">Payment API</span><span class="section-kicker">Payments</span></h2>
