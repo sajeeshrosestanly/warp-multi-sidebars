@@ -95,8 +95,7 @@ article > div:has(time) {
 div[data-component-name='Layout/DocumentationLayout']:has(.page-wide) [class*='DocumentationLayout__ContentWrapper'] {
   width: 100%;
   max-width: none;
-  margin-left: 50px;
-  margin-right: 50px;  
+  margin: 24px 0 50px;
   padding: 0 24px;
   box-sizing: border-box;
   overflow-x: clip;
@@ -105,8 +104,7 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-wide) [class*='D
 div[data-component-name='Layout/DocumentationLayout']:has(.page-wide) article {
   width: 100%;
   max-width: none;
-  margin-left: 50px;
-  margin-right: 50px;  
+  margin: 24px 0 50px;
   padding: 0 24px;
   box-sizing: border-box;
   overflow-x: clip;
