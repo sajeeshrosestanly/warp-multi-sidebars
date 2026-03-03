@@ -24,7 +24,7 @@ export default function HomePage() {
         <h3>Build with Finzly Connect</h3>
         <p>
           Access developer resources for payment initiation, customer onboarding, release updates, and integration
-          support. Start in sandbox and move to production with confidence.
+          guidance. Start in sandbox and move to production with confidence.
         </p>
         <CardGrid>
           <Card href="/getting-started">
@@ -38,10 +38,6 @@ export default function HomePage() {
           <Card href="/changelog">
             <h4>Changelog</h4>
             <p>Track new features, behavior updates, and important release notes.</p>
-          </Card>
-          <Card href="/support">
-            <h4>Support</h4>
-            <p>Get help with integration questions, troubleshooting, and onboarding.</p>
           </Card>
         </CardGrid>
       </Container>

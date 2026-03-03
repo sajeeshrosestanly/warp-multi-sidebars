@@ -7,17 +7,15 @@ links:
   - href: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap
 seo:
   title: Finzly API Developer Portal
-  description: Developer resources for Finzly Connect APIs including getting started guides, API documentation, changelog, and support.
+  description: Developer resources for Finzly Connect APIs including getting started guides, API documentation, and changelog updates.
 navbar:
   items:
     - page: pages/getting-started.md
       label: Getting Started
     - page: pages/api-docs.md
       label: API Docs
-    - page: pages/changelog.md
+    - page: pages/release-notes/changelog.md
       label: Changelog
-    - page: pages/support.md
-      label: Support
     - href: https://finzly.com/
       label: Finzly.com
 markdown:

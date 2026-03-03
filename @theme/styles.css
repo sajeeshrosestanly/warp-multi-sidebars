@@ -109,3 +109,113 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-wide) article {
   box-sizing: border-box;
   overflow-x: clip;
 }
+
+/* Match API docs width behavior for selected pages */
+div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) {
+  --toc-width: 0px;
+}
+
+div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [class*='DocumentationLayout__ContentWrapper'] {
+  width: 100% !important;
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) article {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [id^='TableOfContent__TableOfContentMenu'],
+div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [class*='TableOfContent__TableOfContentMenu'] {
+  display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+}
+
+/* Changelog visual polish */
+.changelog-highlight {
+  border: 1px solid #d6e2ff;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 65%, #eef2ff 100%);
+  padding: 14px 16px;
+  margin: 10px 0 14px;
+}
+
+.changelog-highlight-label {
+  margin: 0;
+  color: #4d6591;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.changelog-highlight-version {
+  margin: 6px 0 10px;
+  color: #10264d;
+}
+
+.changelog-highlight-version strong {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.changelog-highlight-version span {
+  margin-left: 8px;
+  color: #44608d;
+  font-size: 14px;
+}
+
+.changelog-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.changelog-chip {
+  border: 1px solid #d1def8;
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: #1b3f78;
+  background: #ffffff;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
+.changelog-chip.chip-warn {
+  border-color: #f2ca8c;
+  color: #8b4d00;
+  background: #fff6e9;
+}
+
+.changelog-action-callout {
+  border-left: 4px solid #ffae3d;
+  background: #fff9ef;
+  color: #2f3f5c;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 0 0 16px;
+}
+
+.changelog-action-callout p {
+  margin: 4px 0;
+}
+
+.changelog-details {
+  margin-top: 12px;
+  border: 1px solid #d8e3f5;
+  border-radius: 12px;
+  background: #f9fbff;
+  padding: 10px 14px;
+}
+
+.changelog-details > summary {
+  cursor: pointer;
+  color: #17386d;
+  font-weight: 700;
+  margin: -2px 0 10px;
+}
