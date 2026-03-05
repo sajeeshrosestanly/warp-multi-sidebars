@@ -19,6 +19,7 @@ navbar:
       label: Changelog
     - href: https://finzly.com/
       label: Finzly.com
+      external: true
 sidebar:
   hide: true
 breadcrumbs:
@@ -27,7 +28,7 @@ markdown:
   toc:
     depth: 2
 logo:
-  image: images/Finzly-logo.png
+  image: images/Finzly-Logo-Transparent-1-scaled.png
   link: /
 footer:
   copyrightText: Copyright © Finzly. All rights reserved.
