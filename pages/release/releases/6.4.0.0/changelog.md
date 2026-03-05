@@ -1,6 +1,8 @@
 ---
 slug: /releases/6.4.0.0/changelog
 excludeFromSearch: true
+sidebar:
+  hide: true
 ---
 
 <div class="page-wide changelog-page">

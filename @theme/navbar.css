@@ -99,8 +99,28 @@ nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo
   border-radius: 0 !important;
 }
 
+/* Desktop-only logo offset to align with page content width */
+@media screen and (min-width: 960px) {
+  nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo'] {
+    margin-left: 24px;
+  }
+}
+
 /* Mobile navbar dropdown/menu styling */
 @media screen and (max-width: 959px) {
+  /* Hamburger drawer panel (mobile) */
+  .menu-content,
+  [data-component-name*='Sidebar/Sidebar'],
+  [class*='Sidebar__SidebarWrapper'] {
+    background: var(--finzly-navbar-bg) !important;
+  }
+
+  .menu-content a,
+  [data-component-name*='Sidebar/Sidebar'] a,
+  [class*='Sidebar__SidebarWrapper'] a {
+    color: #f2f7ff !important;
+  }
+
   nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarMenu'],
   nav[data-component-name='Navbar/Navbar'] ul[class*='NavbarMenu__NavItemsContainer'] {
     background: var(--finzly-navbar-bg) !important;
@@ -151,4 +171,37 @@ nav[data-component-name='Navbar/Navbar'] [data-component-name='Navbar/NavbarLogo
     background: rgba(255, 255, 255, 0.14) !important;
     color: #f2f7ff !important;
   }
+
+  /* Mobile hamburger menu list container */
+  [class*='MenuMobile__MenuWrapper'] {
+    background: var(--finzly-navbar-bg) !important;
+  }
+
+  [class*='MenuMobile__MenuWrapper'] [class*='Menu__MenuWrapper'] {
+    background: var(--finzly-navbar-bg) !important;
+    border: 1px solid rgba(183, 147, 255, 0.35) !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+  }
+
+  /* Remove white menu item cards and force readable text */
+  [class*='MenuMobile__MenuWrapper'] [class*='MenuItem__MenuItemLabelWrapper'] {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+  }
+
+  [class*='MenuMobile__MenuWrapper'] [class*='MenuItem__MenuItemLink'],
+  [class*='MenuMobile__MenuWrapper'] [class*='MenuItem__MenuItemLabel'],
+  [class*='MenuMobile__MenuWrapper'] [class*='MenuItem__MenuItemLabel'] span {
+    color: #f2f7ff !important;
+  }
+
+  /* Active and hover style for mobile hamburger items */
+  [class*='MenuMobile__MenuWrapper'] [class*='MenuItem__MenuItemLabelWrapper'][data-active='true'],
+  [class*='MenuMobile__MenuWrapper'] [class*='MenuItem__MenuItemLink']:hover [class*='MenuItem__MenuItemLabelWrapper'] {
+    background: linear-gradient(90deg, rgba(41, 12, 110, 0.9), rgba(64, 16, 158, 0.88)) !important;
+    border-color: rgba(183, 147, 255, 0.45) !important;
+  }
+
 }

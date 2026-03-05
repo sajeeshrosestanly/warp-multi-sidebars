@@ -67,6 +67,8 @@ export function buildReleaseNotesScaffold(metadata) {
     "---",
     `slug: /releases/${version}/release-notes`,
     "excludeFromSearch: true",
+    "sidebar:",
+    "  hide: true",
     "---",
     "",
     "<!-- AUTO-GENERATED SCAFFOLD: update this release note content -->",

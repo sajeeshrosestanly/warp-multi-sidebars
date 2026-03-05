@@ -344,6 +344,8 @@ function buildAutoChangelogPage({ releasesList, metadataList, slug = "/changelog
     "---",
     `slug: ${slug}`,
     "excludeFromSearch: true",
+    "sidebar:",
+    "  hide: true",
     "---",
     "",
     "<div class=\"page-wide changelog-page\">",

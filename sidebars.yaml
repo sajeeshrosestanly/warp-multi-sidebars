@@ -1,0 +1,6 @@
+- page: pages/common/getting-started.md
+  label: Getting Started
+- page: pages/release/api-docs.md
+  label: API Docs
+- page: pages/release/changelog.md
+  label: Changelog

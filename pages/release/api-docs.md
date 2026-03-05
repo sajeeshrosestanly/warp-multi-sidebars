@@ -1,6 +1,8 @@
 ---
 slug: /api-docs
 excludeFromSearch: true
+sidebar:
+  hide: true
 ---
 
 <div class="api-hub">

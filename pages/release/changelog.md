@@ -1,6 +1,8 @@
 ---
 slug: /changelog
 excludeFromSearch: true
+sidebar:
+  hide: true
 ---
 
 <div class="page-wide changelog-page">

@@ -20,10 +20,10 @@ navbar:
     - href: https://finzly.com/
       label: Finzly.com
       external: true
-sidebar:
-  hide: true
 breadcrumbs:
   hide: true
+openapi:
+  layout: three-panel
 markdown:
   toc:
     depth: 2

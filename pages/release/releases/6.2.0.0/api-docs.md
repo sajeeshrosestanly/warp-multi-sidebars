@@ -1,6 +1,8 @@
 ---
 slug: /releases/6.2.0.0/api-docs
 excludeFromSearch: true
+sidebar:
+  hide: true
 ---
 
 <div class="api-hub">

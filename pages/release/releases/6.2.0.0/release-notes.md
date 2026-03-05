@@ -1,6 +1,8 @@
 ---
 slug: /releases/6.2.0.0/release-notes
 excludeFromSearch: true
+sidebar:
+  hide: true
 ---
 
 <!-- AUTO-GENERATED SCAFFOLD: update this release note content -->

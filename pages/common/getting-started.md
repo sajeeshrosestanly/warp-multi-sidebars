@@ -1,6 +1,8 @@
 ---
 slug: /getting-started
 excludeFromSearch: true
+sidebar:
+  hide: true
 ---
 
 <div class="gs-lab">
