@@ -19,6 +19,10 @@ navbar:
       label: Changelog
     - href: https://finzly.com/
       label: Finzly.com
+sidebar:
+  hide: true
+breadcrumbs:
+  hide: true
 markdown:
   toc:
     depth: 2
