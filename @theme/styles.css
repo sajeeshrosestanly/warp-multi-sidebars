@@ -219,11 +219,11 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [clas
 
 .changelog-latest-stable-link {
   display: inline-block;
-  border: 1px solid #c9d8f4;
+  border: 1px solid #cdb8ff;
   border-radius: 999px;
   padding: 5px 10px;
-  color: #2a4b7f;
-  background: linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
+  color: #4a1fa0;
+  background: linear-gradient(180deg, #f9f4ff 0%, #efe5ff 100%);
   font-size: 11px;
   line-height: 13px;
   font-weight: 700;
@@ -232,9 +232,9 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [clas
 }
 
 .changelog-latest-stable-link:hover {
-  border-color: #9fbaf0;
-  color: #1f4073;
-  background: #eef5ff;
+  border-color: #b793ff;
+  color: #3a1586;
+  background: #e9d9ff;
 }
 
 .release-channel-badge {
@@ -344,4 +344,13 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [clas
   color: #17386d;
   font-weight: 700;
   margin: -2px 0 10px;
+}
+
+/* Hide Redocly preview PageCounter overlay ("PAGES" strip) */
+[title='Total number of pages in documentation'] {
+  display: none !important;
+}
+
+div:has(> [title='Total number of pages in documentation']) {
+  display: none !important;
 }

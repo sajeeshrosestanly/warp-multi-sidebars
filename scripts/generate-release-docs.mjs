@@ -336,7 +336,7 @@ function buildAutoChangelogPage({ releasesList, metadataList, slug = "/changelog
 
   const latestStable = metadataList.find((entry) => entry.releaseChannel === "GA");
   const latestStableAction = latest.releaseChannel !== "GA" && latestStable
-    ? `    <a class="changelog-latest-stable-link" href="/releases/${latestStable.version}/changelog">Latest stable (GA): ${latestStable.version}</a>`
+    ? `    <a class="changelog-latest-stable-link" href="/releases/${latestStable.version}/changelog">Latest Stable (GA): ${latestStable.version} API Docs</a>`
     : "";
   const latestSupportStatusClass = latest.supportStatus.toLowerCase().replace(/\s+/g, "-");
 
@@ -358,7 +358,7 @@ function buildAutoChangelogPage({ releasesList, metadataList, slug = "/changelog
     "  <div class=\"changelog-highlight-top\">",
     `    <p class="changelog-highlight-version"><strong>${latest.version}</strong> <span>${latest.date}</span> <span class="release-channel-badge ${latest.releaseChannel.toLowerCase()}">${latest.releaseChannel}</span> <span class="support-status-badge ${latest.supportStatus.toLowerCase().replace(/\s+/g, "-")}">${latest.supportStatus}</span></p>`,
     "    <div class=\"changelog-highlight-actions\">",
-    `      <a class="changelog-highlight-spec-link" href="/releases/${latest.version}/api-docs">View ${latest.version} spec</a>`,
+    `      <a class="changelog-highlight-spec-link" href="/releases/${latest.version}/api-docs">View ${latest.version} API Docs</a>`,
     latestStableAction,
     "    </div>",
     "  </div>",

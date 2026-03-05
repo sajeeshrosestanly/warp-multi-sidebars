@@ -15,8 +15,8 @@ sidebar:
   <div class="changelog-highlight-top">
     <p class="changelog-highlight-version"><strong>6.4.0.0</strong> <span>2026-03-03</span> <span class="release-channel-badge beta">Beta</span> <span class="support-status-badge supported">Supported</span></p>
     <div class="changelog-highlight-actions">
-      <a class="changelog-highlight-spec-link" href="/releases/6.4.0.0/api-docs">View 6.4.0.0 spec</a>
-    <a class="changelog-latest-stable-link" href="/releases/6.2.3.0/changelog">Latest stable (GA): 6.2.3.0</a>
+      <a class="changelog-highlight-spec-link" href="/releases/6.4.0.0/api-docs">View 6.4.0.0 API Docs</a>
+    <a class="changelog-latest-stable-link" href="/releases/6.2.3.0/changelog">Latest Stable (GA): 6.2.3.0 API Docs</a>
     </div>
   </div>
   <div class="changelog-chip-row">

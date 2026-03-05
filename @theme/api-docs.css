@@ -785,6 +785,11 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
   color: #e7efff;
 }
 
+:root.dark .api-section h2,
+:root.dark .api-section .section-title {
+  color: #ffffff;
+}
+
 :root.dark .api-hub-hero .subtitle,
 :root.dark .api-section-subtitle,
 :root.dark .quickstart-copy small,
