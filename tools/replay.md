@@ -1,3 +1,7 @@
+---
+excludeFromSearch: true
+---
+
 # Replay: Browser-based Try-It Console
 
 ## Introduction

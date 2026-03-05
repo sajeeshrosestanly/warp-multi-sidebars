@@ -1,3 +1,7 @@
+---
+excludeFromSearch: true
+---
+
 # Warp CLI (Command Line Interface)
 
 ## Introduction

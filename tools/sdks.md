@@ -1,3 +1,7 @@
+---
+excludeFromSearch: true
+---
+
 # Warp SDK (Software Development Kit)
 
 ## Introduction

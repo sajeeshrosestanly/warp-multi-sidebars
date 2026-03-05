@@ -143,6 +143,21 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [clas
   margin: 10px 0 14px;
 }
 
+.changelog-highlight.supported {
+  border-color: #cfe8d8;
+  background: linear-gradient(135deg, #ffffff 0%, #f3fcf6 65%, #edf9f1 100%);
+}
+
+.changelog-highlight.deprecated {
+  border-color: #f3d0bc;
+  background: linear-gradient(135deg, #ffffff 0%, #fff6f1 65%, #ffeee5 100%);
+}
+
+.changelog-highlight.retired {
+  border-color: #ddd8e8;
+  background: linear-gradient(135deg, #ffffff 0%, #f7f5fb 65%, #f2eff8 100%);
+}
+
 .changelog-highlight-label {
   margin: 0;
   color: #4d6591;
@@ -158,6 +173,13 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [clas
   color: #10264d;
 }
 
+.changelog-highlight-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .changelog-highlight-version strong {
   font-size: 24px;
   line-height: 28px;
@@ -167,6 +189,110 @@ div[data-component-name='Layout/DocumentationLayout']:has(.page-match-api) [clas
   margin-left: 8px;
   color: #44608d;
   font-size: 14px;
+}
+
+.changelog-highlight-spec-link {
+  display: inline-block;
+  border: 1px solid #d1def8;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #1b3f78;
+  background: #ffffff;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.changelog-highlight-spec-link:hover {
+  border-color: #9fbaf0;
+  color: #17396f;
+}
+
+.changelog-highlight-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.changelog-latest-stable-link {
+  display: inline-block;
+  border: 1px solid #c9d8f4;
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: #2a4b7f;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.changelog-latest-stable-link:hover {
+  border-color: #9fbaf0;
+  color: #1f4073;
+  background: #eef5ff;
+}
+
+.release-channel-badge {
+  display: inline-block;
+  margin-left: 8px;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.release-channel-badge.ga {
+  border: 1px solid #aadfc1;
+  color: #1d6a3b;
+  background: #ecf9f0;
+}
+
+.release-channel-badge.beta {
+  border: 1px solid #f2ca8c;
+  color: #8b4d00;
+  background: #fff6e9;
+}
+
+.support-status-badge {
+  display: inline-block;
+  margin-left: 8px;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.support-status-badge.supported {
+  border: 1px solid #aadfc1;
+  color: #1d6a3b;
+  background: #ecf9f0;
+}
+
+.support-status-badge.deprecated {
+  border: 1px solid #ffd0b6;
+  color: #a14500;
+  background: #fff2e9;
+}
+
+.support-status-badge.retired {
+  border: 1px solid #d9d6e8;
+  color: #4f456d;
+  background: #f4f2fa;
+}
+
+.release-channel-note {
+  margin: 8px 0 0;
+  color: #5a6f94;
+  font-size: 13px;
 }
 
 .changelog-chip-row {

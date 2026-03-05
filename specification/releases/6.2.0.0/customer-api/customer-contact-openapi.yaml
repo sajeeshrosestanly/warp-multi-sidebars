@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  title: Customer Contact API
+  description: Customer beneficiary/contact APIs extracted from the customer domain specification.
+  version: 2.5.1
+servers:
+  - url: https://sandbox-security-uat.finzly.io/auth/realms/BANKOS.UAT.SANDBOX.CUSTOMER/protocol/openid-connect/token
+    description: FinzlyConnect Customer APIs
+security:
+  - oAuth2:
+      - roles
+tags:
+  - name: Customer Contact
+    description: APIs for customer beneficiary/contact operations.
+x-tagGroups:
+  - name: Customer Contact APIs
+    tags:
+      - Customer Contact
+
+paths:
+  /v1/customers/{customerId}/beneficiary:
+    post:
+      tags: [Customer Contact]
+      summary: Create customer contact
+      operationId: createbeneficiary
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerContactRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerContactResponse'
+  /v1/customers/{customerId}/beneficiary/{contactId}:
+    patch:
+      tags: [Customer Contact]
+      summary: Update customer contact
+      operationId: updatebeneficiary
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: contactId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerContact'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerContactResponse'
+  /v2/customers/{customerUID}/contacts:
+    get:
+      tags: [Customer Contact]
+      summary: Search customer contacts
+      operationId: searchCustomerContacts
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: integer }
+        - name: contactName
+          in: query
+          required: false
+          schema: { type: string }
+        - name: accountNumber
+          in: query
+          required: false
+          schema: { type: string }
+        - name: page
+          in: query
+          required: true
+          schema: { type: string }
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: string
+            maximum: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCustomerContactResponse'
+  /v2/customers/{customerUID}/contacts/{contactUID}:
+    get:
+      tags: [Customer Contact]
+      summary: Get customer contact
+      operationId: getCustomerContactByUID
+      parameters:
+        - name: customerUID
+          in: path
+          required: true
+          schema: { type: string }
+        - name: contactUID
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomerContactResponse'
+
+components:
+  schemas:
+    CustomerContactRequest:
+      $ref: ./customer-openapi.yaml#/components/schemas/CustomerContactRequest
+    UpdateCustomerContact:
+      $ref: ./customer-openapi.yaml#/components/schemas/UpdateCustomerContact
+    CreateCustomerContactResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/CreateCustomerContactResponse
+    SearchCustomerContactResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/SearchCustomerContactResponse
+    GetCustomerContactResponse:
+      $ref: ./customer-openapi.yaml#/components/schemas/GetCustomerContactResponse
+  securitySchemes:
+    oAuth2:
+      $ref: ./customer-openapi.yaml#/components/securitySchemes/oAuth2

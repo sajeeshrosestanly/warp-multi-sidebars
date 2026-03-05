@@ -1,5 +1,6 @@
 ---
 slug: /getting-started
+excludeFromSearch: true
 ---
 
 <div class="gs-lab">

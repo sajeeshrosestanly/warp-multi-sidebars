@@ -1,3 +1,7 @@
+---
+excludeFromSearch: true
+---
+
 # Warp Tools
 
 Welcome to the Warp Tools index page. Here, you’ll find an overview of the key tools available to help you interact with the Warp platform, manage timelines, and experiment with time travel scenarios.

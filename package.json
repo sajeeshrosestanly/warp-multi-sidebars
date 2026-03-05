@@ -4,7 +4,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-      "start": "npx @redocly/cli preview"
+      "start": "npx @redocly/cli preview",
+      "release:docs": "node scripts/generate-release-docs.mjs",
+      "release:delete": "node scripts/delete-release-docs.mjs"
     },
     "dependencies": {
       "@redocly/realm": "*"

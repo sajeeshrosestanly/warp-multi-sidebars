@@ -7,6 +7,25 @@
   overflow-x: clip;
 }
 
+.api-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 6px;
+}
+
+.api-version-chip {
+  border: 1px solid #c9d9ff;
+  background: #ffffff;
+  color: #17305d;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
 /* API docs page should not reserve right TOC rail space */
 div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) {
   --toc-width: 0px;
@@ -212,7 +231,7 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
 }
 
 .api-hub-hero .eyebrow {
-  margin: 0 0 6px 0;
+  margin: 0;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -774,6 +793,7 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
 }
 
 :root.dark .api-proof-item,
+:root.dark .api-version-chip,
 :root.dark .api-quickstart,
 :root.dark .api-section,
 :root.dark .subapi-card,

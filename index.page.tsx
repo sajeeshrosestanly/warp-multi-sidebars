@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 const finzlyBackground = String(require('./images/background.svg')).replace(/\\/g, '/');
 
+export const frontmatter = {
+  excludeFromSearch: true,
+};
+
 export default function HomePage() {
   return (
     <div>
