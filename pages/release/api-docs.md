@@ -60,13 +60,18 @@ sidebar:
           <span class="subapi-text">
             <strong>Payment Rails</strong>
             <small>Explore payment rails for orchestration and settlement.</small>
-            <span class="card-meta"><span>Orchestration</span><span>Real-time</span></span>
+            <span class="card-meta"><span>Real-time</span></span>
             <span class="product-children">
               <span class="product-child">ACH</span>
               <span class="product-child">WIRE</span>
               <span class="product-child">SWIFT</span>
-              <span class="product-child">RTP</span>
-              <span class="product-child">FEDNOW</span>
+            </span>
+            <span class="realtime-subcard">
+              <span class="realtime-subcard-title">Realtime</span>
+              <span class="realtime-subcard-items">
+                <span class="product-child product-child-realtime">RTP</span>
+                <span class="product-child product-child-realtime">FEDNOW</span>
+              </span>
             </span>
           </span>
           <span class="card-arrow" aria-hidden="true">-></span>
