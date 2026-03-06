@@ -11,7 +11,7 @@ sidebar:
       <div class="api-hero-meta">
         <p class="eyebrow">Finzly Connect</p>
         <!-- API_VERSION_CHIP_START -->
-        <span class="api-version-chip">6.4.0.0</span>
+        <span class="api-version-chip">6.2.3.0</span>
 <!-- API_VERSION_CHIP_END -->
       </div>
       <h1>API Specification</h1>
@@ -27,7 +27,7 @@ sidebar:
         <a class="api-fullspec-link" href="/specification/finzly-connect-openapi" aria-label="View full OpenAPI spec">
           <span class="api-fullspec-icon" aria-hidden="true">API</span>
           <!-- API_SPEC_CTA_LABEL_START -->
-          <span class="api-fullspec-label">View 6.4.0.0 spec</span>
+          <span class="api-fullspec-label">View 6.2.3.0 spec</span>
 <!-- API_SPEC_CTA_LABEL_END -->
         </a>
       </div>

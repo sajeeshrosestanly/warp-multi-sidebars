@@ -7,17 +7,41 @@ sidebar:
 
 <div class="page-wide">
 
-# Release Notes
+<a id="release-template"></a>
+# Release Notes {{VERSION}}
 
-This is the default release notes landing page.
+Release date: **YYYY-MM-DD**
+Release type: **GA**
 
-Use this page before versioned release notes are generated, or as a pointer to your latest published release.
+## Release Summary
+TODO: Add concise release summary for this version.
 
-## How to publish a new release
+## Change Index
 
-1. Add release metadata in `release-metadata/<version>.json`.
-2. Run `npm run release:docs -- <version>`.
-3. Update the generated `pages/release/releases/<version>/release-notes.md` content from scaffold to final notes.
+<div class="release-notes-table">
+
+| **#** | **Change** | **Category** | **Impact** | **Breaking Changes** | **Description** | **Details** |
+|:--|:-----------|:-------------|:-----------|:-------------------|:----------------|:------------|
+| 1 | TODO: Add change title | New Feature / Enhancement / Bug Fix / UAT Issue Fix | TODO: Add impacted clients | None / **Required** | TODO: Add short description of the change. | [More ->](#todo-change-1) |
+| 2 | TODO: Add change title | New Feature / Enhancement / Bug Fix / UAT Issue Fix | TODO: Add impacted clients | None / **Required** | TODO: Add short description of the change. | [More ->](#todo-change-2) |
+
+</div>
+
+## Detailed Changes
+
+<a id="todo-change-1"></a>
+### TODO: Add change title
+- **Category:** TODO
+- **Impact:** TODO
+- **Breaking changes:** TODO
+- **Details:** TODO
+
+<a id="todo-change-2"></a>
+### TODO: Add change title
+- **Category:** TODO
+- **Impact:** TODO
+- **Breaking changes:** TODO
+- **Details:** TODO
 
 ---
 

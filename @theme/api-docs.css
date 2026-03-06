@@ -571,10 +571,8 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
 
 .subapi-grid {
   margin-top: 14px;
-  display: grid;
-  grid-template-columns: 1fr;
+  column-count: 1;
   column-gap: 10px;
-  gap: 10px;
 }
 
 .subapi-card {
@@ -589,7 +587,9 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
   min-height: 96px;
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   width: 100%;
-  margin: 0;
+  margin: 0 0 10px 0;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
 }
 
 .subapi-card:hover {
@@ -684,9 +684,44 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
   background: #f7f2ff;
 }
 
+.realtime-subcard {
+  margin-top: 10px;
+  display: block;
+  border: 1px solid #c9d8ff;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+  padding: 8px;
+}
+
+.realtime-subcard-title {
+  display: inline-flex;
+  border-radius: 999px;
+  border: 1px solid #b8cbff;
+  background: #ffffff;
+  color: #2b4e94;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 12px;
+  padding: 3px 7px;
+}
+
+.realtime-subcard-items {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.product-child-realtime {
+  border-color: #bcd0ff;
+  background: #ffffff;
+}
+
 @media (min-width: 1180px) {
   .subapi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-count: 2;
   }
 }
 
@@ -808,5 +843,22 @@ div[data-component-name='Layout/DocumentationLayout']:has(.api-hub) [class*='Fee
 :root.dark .card-meta span {
   border-color: #334c78;
   background: #182640;
+  color: #dce9ff;
+}
+
+:root.dark .realtime-subcard {
+  border-color: #3a5483;
+  background: linear-gradient(180deg, #1a2943 0%, #17253e 100%);
+}
+
+:root.dark .realtime-subcard-title {
+  border-color: #4f6aa0;
+  background: #1e3152;
+  color: #dce9ff;
+}
+
+:root.dark .product-child-realtime {
+  border-color: #4a6392;
+  background: #1b2b46;
   color: #dce9ff;
 }

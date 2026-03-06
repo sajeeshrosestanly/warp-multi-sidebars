@@ -11,16 +11,16 @@ export function buildReleaseNotesScaffold(metadata) {
   const releaseChannel = metadata.releaseChannel || "GA";
   const supportStatus = metadata.supportStatus || "Supported";
   const snapshot = metadata.stats || {
-    added: 0,
-    changed: 0,
+    new: 0,
+    enhanced: 0,
     fixed: 0,
-    actionRequired: 0,
+    breakingChanges: 0,
   };
 
   const suggestedChanges = [
     {
       title: "TODO: Add first change title",
-      type: "Added",
+      type: "New",
       apis: "TODO API domain",
       actionRequired: "No",
       breaking: "No",
@@ -29,7 +29,7 @@ export function buildReleaseNotesScaffold(metadata) {
     },
     {
       title: "TODO: Add second change title",
-      type: "Changed",
+      type: "Enhanced",
       apis: "TODO API domain",
       actionRequired: "Yes/No",
       breaking: "Yes/No",
@@ -43,7 +43,6 @@ export function buildReleaseNotesScaffold(metadata) {
       `| ${entry.title}`,
       `${entry.type}`,
       `${entry.apis}`,
-      `${entry.actionRequired}`,
       `${entry.breaking}`,
       `[Details](#${entry.detailId})`,
       `[Spec](${entry.specLink}) |`,
@@ -84,15 +83,15 @@ export function buildReleaseNotesScaffold(metadata) {
     "## Release Summary",
     summary,
     "",
-    `Release snapshot: Added ${snapshot.added} | Changed ${snapshot.changed} | Fixed ${snapshot.fixed} | Action required ${snapshot.actionRequired}`,
+    `Release snapshot: New ${snapshot.new} | Enhanced ${snapshot.enhanced} | Fixed ${snapshot.fixed} | Breaking Changes ${snapshot.breakingChanges}`,
     "",
-    "## Action Required",
-    "- TODO: list customer-impacting actions, migration steps, or deadlines.",
+    "## Breaking Changes",
+    "- TODO: list non-backward-compatible changes, migration steps, or deadlines.",
     "",
     "## Change Index",
     "",
-    "| Change | Type | Impacted APIs | Action Required | Breaking | Details | Spec Link |",
-    "|:--|:--|:--|:--|:--|:--|:--|",
+    "| Change | Type | Impacted APIs | Breaking Changes | Details | Spec Link |",
+    "|:--|:--|:--|:--|:--|:--|",
     ...tableRows,
     "",
     "## Detailed Changes",

@@ -96,7 +96,7 @@ const FinzlyContainer = styled.div`
   }
 
   > p {
-    color: #2f446c;
+    color: #000000 !important;
     text-align: center;
     font-size: 20px;
     font-weight: 500;
@@ -109,7 +109,7 @@ const FinzlyContainer = styled.div`
       color: #f2f7ff;
     }
     > p {
-      color: #b5caee;
+      color: #b5caee !important;
     }
   }
 

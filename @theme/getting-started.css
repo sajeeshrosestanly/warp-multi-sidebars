@@ -208,6 +208,25 @@ div[data-component-name='Layout/DocumentationLayout']:has(.gs-lab) [class*='Feed
   margin-top: 10px;
 }
 
+.gs-subsection {
+  margin-top: 12px;
+  border: 1px solid #d8e3f5;
+  border-radius: 12px;
+  background: #f7faff;
+  padding: 10px 12px;
+}
+
+.gs-subsection h3 {
+  margin: 0;
+  color: #17386d;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.gs-subsection ul {
+  margin: 8px 0 0;
+}
+
 .gs-shell {
   margin-top: 12px;
   border: 1px solid #193667;
@@ -310,4 +329,13 @@ div[data-component-name='Layout/DocumentationLayout']:has(.gs-lab) [class*='Feed
   border-color: #3a5686;
   background: #1a2d4a;
   color: #d5e4ff;
+}
+
+:root.dark .gs-subsection {
+  border-color: #38557f;
+  background: #192b45;
+}
+
+:root.dark .gs-subsection h3 {
+  color: #dbe8ff;
 }

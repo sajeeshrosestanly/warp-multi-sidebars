@@ -11,23 +11,24 @@ sidebar:
 
 # Release Notes 6.2.3.0
 
-Release date: **2026-03-03**
+Release date: **2026-03-06**
 Release type: **GA**
+Support status: **Supported**
 
 ## Release Summary
-TODO: add release summary.
+This release includes bug fixes.
 
-Release snapshot: Added 0 | Changed 0 | Fixed 0 | Action required 0
+Release snapshot: New 0 | Enhanced 0 | Fixed 0 | Breaking Changes 0
 
-## Action Required
-- TODO: list customer-impacting actions, migration steps, or deadlines.
+## Breaking Changes
+- TODO: list non-backward-compatible changes, migration steps, or deadlines.
 
 ## Change Index
 
-| Change | Type | Impacted APIs | Action Required | Breaking | Details | Spec Link |
-|:--|:--|:--|:--|:--|:--|:--|
-| TODO: Add first change title | Added | TODO API domain | No | No | [Details](#todo-add-first-change-title) | [Spec](/releases/6.2.3.0/api-docs) |
-| TODO: Add second change title | Changed | TODO API domain | Yes/No | Yes/No | [Details](#todo-add-second-change-title) | [Spec](/releases/6.2.3.0/api-docs) |
+| Change | Type | Impacted APIs | Breaking Changes | Details | Spec Link |
+|:--|:--|:--|:--|:--|:--|
+| TODO: Add first change title | New | TODO API domain | No | [Details](#todo-add-first-change-title) | [Spec](/releases/6.2.3.0/api-docs) |
+| TODO: Add second change title | Enhanced | TODO API domain | Yes/No | [Details](#todo-add-second-change-title) | [Spec](/releases/6.2.3.0/api-docs) |
 
 ## Detailed Changes
 

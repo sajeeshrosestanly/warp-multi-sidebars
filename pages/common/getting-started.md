@@ -40,6 +40,15 @@ sidebar:
         <li>Submit your onboarding request using the <a href="https://finzly.com/contact/">Finzly Contact form</a>.</li>
         <li>Include your company name, intended use case, and contact email so the team can provision sandbox access.</li>
       </ul>
+      <div class="gs-subsection">
+        <h3>After provisioning, you will receive</h3>
+        <ul>
+          <li><code>client_id</code> and <code>client_secret</code> credentials</li>
+          <li>Tenant/partner identifier details</li>
+          <li>Sandbox and Token base URLs</li>
+          <li>Support contact information for onboarding issues</li>
+        </ul>
+      </div>
     </section>
 
     <section class="gs-step" id="generate-an-access-token">
@@ -50,13 +59,12 @@ sidebar:
         <div class="gs-shell-top">Token request</div>
 
 ```bash
-curl -X POST https://sandbox.api.finzly.io/oauth/token \
-  -H "Content-Type: application/json" \
-  -d '{
-    "client_id": "YOUR_CLIENT_ID",
-    "client_secret": "YOUR_CLIENT_SECRET",
-    "grant_type": "client_credentials"
-  }'
+curl --location "https://security-uat.finzly.io/auth/realms/BANKOS-UAT-SANDBOX-CUSTOMER/protocol/openid-connect/token" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --header "Accept: application/vnd.api+json" \
+  --data-urlencode "client_id=YOUR_CLIENT_ID" \
+  --data-urlencode "client_secret=YOUR_CLIENT_SECRET" \
+  --data-urlencode "grant_type=client_credentials"
 ```
       </div>
     </section>
@@ -64,22 +72,15 @@ curl -X POST https://sandbox.api.finzly.io/oauth/token \
     <section class="gs-step" id="make-your-first-api-call">
       <span class="gs-badge" aria-hidden="true">3</span>
       <h2>3. Make your first API call</h2>
-      <p>Use the token to submit a sample payment request. You can optionally include an <code>Idempotency-Key</code> header to help prevent duplicate payment creation retries.</p>
+      <p>Use the token to call a protected API endpoint and verify access.</p>
       <div class="gs-shell">
-        <div class="gs-shell-top">Sample payment request</div>
+        <div class="gs-shell-top">Sample customer request</div>
 
 ```bash
-curl -X POST https://sandbox.api.finzly.io/payments \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -H "Idempotency-Key: 1f0f4c90-fc80-4f84-a988-5e188f3f2c11" \
-  -d '{
-    "amount": 1250.75,
-    "currency": "USD",
-    "rail": "ACH",
-    "beneficiaryId": "ben_001"
-  }'
+curl --location "https://sandbox-digitalbanking-uat.finzly.io/api/openbanking/v2/customers/{customerId}" \
+  --header "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
+     
       </div>
     </section>
 
@@ -106,8 +107,8 @@ curl -X POST https://sandbox.api.finzly.io/payments \
       <span class="gs-badge" aria-hidden="true">5</span>
       <h2>5. Next steps</h2>
       <ul class="gs-next">
-        <li>Confirm official sandbox and production base URLs and update the sample requests.</li>
-        <li>Document product-specific implementation guides for payments, customers, and webhook events.</li>
+        <li>Complete end-to-end integration with Finzly Connect APIs in sandbox, including authentication, core API flows, and webhook handling.</li>
+        <li>Execute validation and regression testing for your target use cases; once results are successful, promote the integration changes to production.</li>
       </ul>
     </section>
   </main>

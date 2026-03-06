@@ -2,12 +2,12 @@
   "version": "6.2.0.0",
   "date": "2026-03-03",
   "releaseChannel": "GA",
-  "supportStatus": "Retired",
-  "summary": "Baseline release used as the starting point for changelog history.",
+  "supportStatus": "Supported",
+  "summary": "This release introduces LEI (Legal Entity Identifier) validation, comprehensive RTP-RFP support, enhanced instant payment capabilities, ACH Positive Pay improvements, unified payment rail validation, and various API enhancements. This release includes 10 new features, 2 UAT issue fixes, and 2 bug fixes, with several changes requiring client attention for account feature updates.",
   "stats": {
-    "added": 4,
-    "changed": 1,
+    "new": 4,
+    "enhanced": 1,
     "fixed": 0,
-    "actionRequired": 0
+    "breakingChanges": 0
   }
 }
