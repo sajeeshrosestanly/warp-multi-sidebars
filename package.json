@@ -4,12 +4,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-      "start": "npx @redocly/cli preview",
-      "release:create": "node scripts/generate-release-docs.mjs",
-      "release:delete": "node scripts/delete-release-docs.mjs"
+        "start": "npx @redocly/cli preview",
+        "release:create": "node scripts/generate-release-docs.mjs",
+        "release:delete": "node scripts/delete-release-docs.mjs"
     },
     "dependencies": {
-      "@redocly/realm": "*"
+        "@redocly/realm": "*",
+        "yaml": "^2.8.2"
     }
-  }
-
+}

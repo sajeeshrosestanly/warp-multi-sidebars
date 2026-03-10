@@ -133,6 +133,7 @@ function toNumberOrZero(value) {
   return Number.isFinite(num) ? num : 0;
 }
 
+
 function normalizeReleaseChannel(value) {
   if (typeof value !== "string" || !value.trim()) {
     return "GA";
@@ -339,7 +340,6 @@ function buildAutoChangelogPage({ releasesList, metadataList, slug = "/changelog
     ? `    <a class="changelog-latest-stable-link" href="/releases/${latestStable.version}/changelog">Latest Stable (GA): ${latestStable.version} API Docs</a>`
     : "";
   const latestSupportStatusClass = latest.supportStatus.toLowerCase().replace(/\s+/g, "-");
-
   return [
     "---",
     `slug: ${slug}`,

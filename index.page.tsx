@@ -12,7 +12,7 @@ export default function HomePage() {
     <div>
       <FinzlyContainer>
         <FinzlyBg />
-        <h1>Finzly API Developer Portal</h1>
+        <h1>Finzly Developer Portal</h1>
         <p>Build modern banking experiences with Finzly Connect APIs.</p>
         <HomeActions>
           <a className="api-fullspec-link" href="/api-docs" aria-label="Explore API Docs">
@@ -27,8 +27,8 @@ export default function HomePage() {
       <Container>
         <h3>Build with Finzly Connect</h3>
         <p>
-          Access developer resources for payment initiation, customer onboarding, release updates, and integration
-          guidance. Start in sandbox and move to production with confidence.
+          Build end-to-end banking workflows with Finzly Connect APIs across Payments, Customers, FX, Webhooks,
+          and Virtual Accounts securely with OAuth2, from sandbox to production.
         </p>
         <CardGrid>
           <Card href="/getting-started">
@@ -66,11 +66,10 @@ const FinzlyBg = styled.div`
     height: 100%;
     background-image:
       linear-gradient(180deg, rgba(82, 0, 255, 0.2) 0%, rgba(82, 0, 255, 0) 55%),
-      url('https://finzly.com/wp-content/uploads/2026/01/ef7fe3.webp'),
       url('${finzlyBackground}');
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-position: center top, center 42%, center top;
-    background-size: cover, auto min(58vh, 560px), cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center top, center top;
+    background-size: cover, cover;
     opacity: 0.72;
   }
 
@@ -128,7 +127,7 @@ const FinzlyContainer = styled.div`
 `;
 
 const HomeActions = styled.div`  
-  margin-top: 150px;
+  margin-top: 12px;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -153,7 +152,7 @@ const HomeActions = styled.div`
 `;
 
 const Container = styled.div`
-  margin: 64px auto 48px;
+  margin: 40px auto 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
